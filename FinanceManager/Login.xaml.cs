@@ -19,9 +19,16 @@ namespace FinancingManager
     /// </summary>
     public partial class Login : Window
     {
+        string password;
+        string login;
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void loginBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
