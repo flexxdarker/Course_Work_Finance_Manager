@@ -24,5 +24,15 @@ namespace FinanceManager
         {
             InitializeComponent();
         }
+
+        private void AddLimit_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("AddLimit_Click");
+        }
+
+        private void ShowCostst_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("ShowCostst_DoubleClick");
+        }
     }
 }

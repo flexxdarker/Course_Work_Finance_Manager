@@ -6,7 +6,46 @@
         xmlns:local="clr-namespace:FinanceManager"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <!--<Window.Resources >
+        <Style x:Key="ButtonlStyle1" TargetType="{x:Type Button}">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="120"/>
+        </Style>
+    </Window.Resources>-->
 
-    </Grid>
+    <DockPanel Background="#0d1217">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ToolBar Grid.Column="1" Grid.ColumnSpan="2" Height="35"><!--Background="#0d1217">-->
+                <!--Background="Black"-->
+                <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
+                <Label Style="{StaticResource LabelStyle}">2000</Label>
+                <Label Style="{StaticResource LabelStyle}">$</Label>
+                <Border Style="{StaticResource BorderStyle}">
+                    <Button Style="{StaticResource ButtonlStyle}" Click="AddLimit_Click">Add limit</Button>
+                </Border>
+            </ToolBar>
+
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left">Add category</Button>
+
+
+            <ListBox x:Name="CategoriesListBox"  Grid.Row="1" Grid.Column="3" Margin="5" Background="#0d1217" MouseDoubleClick="ShowCostst_DoubleClick"></ListBox>
+        </Grid>
+
+    </DockPanel>
 </Window>
