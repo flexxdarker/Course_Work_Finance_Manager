@@ -11,8 +11,8 @@ namespace EntityFramework.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int CategorisId { get; set; }
-        public virtual Category Categoris { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
       
     }
 }

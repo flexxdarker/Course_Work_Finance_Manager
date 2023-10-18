@@ -15,8 +15,7 @@ namespace EntityFramework.Data.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Login).IsRequired();
-          
-          
+            builder.Property(x=>x.Password).IsRequired();
         }
     }
 }

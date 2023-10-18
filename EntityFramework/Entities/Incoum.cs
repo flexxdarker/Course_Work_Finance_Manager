@@ -12,6 +12,6 @@ namespace EntityFramework.Entities
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int AcountId { get; set; }
-        public virtual Acount Acounts { get; set; }
+        public virtual Acount Acount { get; set; }
     }
 }

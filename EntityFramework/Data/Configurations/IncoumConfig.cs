@@ -15,7 +15,7 @@ namespace EntityFramework.Data.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired();
-            builder.HasOne(x => x.Acounts).WithMany(x => x.Incoums).HasForeignKey(x => x.AcountId);
+            builder.HasOne(x => x.Acount).WithMany(x => x.Incoums).HasForeignKey(x => x.AcountId);
         }
     }
 }
