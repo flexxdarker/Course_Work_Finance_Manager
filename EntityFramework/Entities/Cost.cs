@@ -10,7 +10,7 @@ namespace EntityFramework.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Price { get; set; }
+        public decimal Price { get; set; }
         public int CategorisId { get; set; }
         public virtual Category Categoris { get; set; }
       
