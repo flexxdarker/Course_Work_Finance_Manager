@@ -6,17 +6,6 @@
         xmlns:local="clr-namespace:FinanceManager"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <!--<Window.Resources >
-        <Style x:Key="ButtonlStyle1" TargetType="{x:Type Button}">
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="120"/>
-        </Style>
-    </Window.Resources>-->
 
     <DockPanel Background="#0d1217">
         <Grid>
@@ -31,14 +20,14 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ToolBar Grid.Column="1" Grid.ColumnSpan="2" Height="35"><!--Background="#0d1217">-->
+            <ToolBar Grid.Column="1" Grid.ColumnSpan="2" Height="35" Background="#0d1217">
                 <!--Background="Black"-->
                 <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
                 <Label Style="{StaticResource LabelStyle}">2000</Label>
                 <Label Style="{StaticResource LabelStyle}">$</Label>
-                <Border Style="{StaticResource BorderStyle}">
-                    <Button Style="{StaticResource ButtonlStyle}" Click="AddLimit_Click">Add limit</Button>
-                </Border>
+                <!--<Border Style="{StaticResource BorderStyle}">-->
+                <Button Style="{StaticResource ButtonlStyle}" Click="AddLimit_Click">Add limit</Button>
+                <!--</Border>-->
             </ToolBar>
 
             <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left">Add category</Button>
