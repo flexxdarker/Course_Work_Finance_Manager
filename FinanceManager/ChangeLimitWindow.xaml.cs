@@ -30,9 +30,15 @@ namespace FinancingManager
             if(!int.TryParse(LimitTextBox.Text, out NewLimit))
             { 
                 MessageBox.Show($"The 'limit' field must contain only a numeric value without text or special characters! And limit cannot be greater than {MaxLimit}");
+                LimitTextBox.Text = string.Empty;
                 return;
             }
             // запис нового ліміта в базу щоб потім змінювати ліміт в мейн віндов
+
+
+
+            LimitTextBox.Text = string.Empty;
+            this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

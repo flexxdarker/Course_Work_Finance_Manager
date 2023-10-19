@@ -4,7 +4,7 @@
 
     <Style x:Key="ButtonlStyle" TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="10,0,10,0"/>
-        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Background" Value="#0d1217"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="FontWeight" Value="Bold"/>

@@ -21,19 +21,16 @@
             </Grid.RowDefinitions>
 
             <ToolBar Grid.Column="1" Grid.ColumnSpan="2" Height="35" Background="#0d1217">
-                <!--Background="Black"-->
                 <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
-                <Label Style="{StaticResource LabelStyle}">2000</Label>
+                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyle}"></Label>
                 <Label Style="{StaticResource LabelStyle}">$</Label>
-                <!--<Border Style="{StaticResource BorderStyle}">-->
-                <Button Style="{StaticResource ButtonlStyle}" Click="AddLimit_Click">Add limit</Button>
-                <!--</Border>-->
+                <Button Style="{StaticResource ButtonlStyle}" Click="ChangeLimit_Click">Change limit</Button>
             </ToolBar>
 
-            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left">Add category</Button>
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left" Click="AddCategory_Click">Add category</Button>
 
-
-            <ListBox x:Name="CategoriesListBox"  Grid.Row="1" Grid.Column="3" Margin="5" Background="#0d1217" MouseDoubleClick="ShowCostst_DoubleClick"></ListBox>
+            <ListBox x:Name="CategoriesListBox"  Grid.Row="1" Grid.Column="3" Margin="5" Background="#0d1217" MouseDoubleClick="ShowExpenses_DoubleClick"></ListBox>
+        
         </Grid>
 
     </DockPanel>
