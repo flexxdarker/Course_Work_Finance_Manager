@@ -23,10 +23,18 @@ namespace FinancingManager
         {
             InitializeComponent();
         }
-
-        private void SaveChanges_Click(object sender, RoutedEventArgs e)
+        private void SaveCategory_Click(object sender, RoutedEventArgs e)
         {
+            //перевірка чи є категорія в базі
+            // додавання її в базу для подальшого виведення в список категорій
 
+            CategoryTextBox.Text = string.Empty;
+            this.Close();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
