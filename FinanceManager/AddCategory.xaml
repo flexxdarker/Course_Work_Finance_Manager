@@ -5,8 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinancingManager"
         mc:Ignorable="d"
-        Title="AddCategory" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="AddCategory" Height="300" Width="500">
+    <DockPanel Background="Black">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--<Border Width="70" Height="70" CornerRadius="6" Grid.Column="1" Grid.ColumnSpan="1" Margin="0,5,0,0" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="C:\Users\RTX\source\repos\Course_Work_Finance_Manager\FinanceManager\ResoursesXAML\moneyBag.png"/>
+                </Border.Background>
+            </Border>-->
+
+            <Label Grid.Row="1" Style="{StaticResource LabelStyle}">Enter category name :</Label>
+            <TextBox x:Name="CategoryTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyle}"></TextBox>
+
+            <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="SaveCategory_Click">Save changes</Button>
+            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="Cancel_Click">Cancel</Button>
+        </Grid>
+    </DockPanel>
 </Window>
