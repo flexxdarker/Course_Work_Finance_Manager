@@ -21,7 +21,8 @@ namespace FinanceManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        ChangeLimitWindow changeLimitWindow;
+        ChangeLimitWindow? changeLimitWindow;
+        AddCategory? addCategory;
         int Limit = 2000;
         public MainWindow()
         {
@@ -42,7 +43,11 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
+            addCategory = new AddCategory();
+            addCategory.ShowDialog();
 
+            //витягання з бази доданої категорії
+            // виведення її в список категорій
         }
     }
 }
