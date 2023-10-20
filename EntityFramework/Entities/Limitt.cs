@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace EntityFramework.Entities
 {
-    internal class Limit
+    public class Limitt
     {
-           public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
+        public int Id { get; set; }
+        public decimal Limit { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+
     }
 }
