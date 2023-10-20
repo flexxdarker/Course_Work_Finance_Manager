@@ -23,7 +23,7 @@
 
             <Border Width="70" Height="70" CornerRadius="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,5,0,0" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="C:\Users\RTX\source\repos\Course_Work_Finance_Manager\FinanceManager\ResoursesXAML\moneyBag.png"/>
+                    <ImageBrush Stretch="Fill" ImageSource="\ResoursesXAML\moneyBag.jpg"/>
                 </Border.Background>
             </Border>
 

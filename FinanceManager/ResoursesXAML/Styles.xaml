@@ -3,8 +3,8 @@
                     xmlns:vms="clr-namespace:FinanceManager">
 
     <Style x:Key="ButtonlStyle" TargetType="{x:Type Button}">
-        <Setter Property="Margin" Value="10,0,10,0"/>
-        <Setter Property="Background" Value="#0d1217"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -21,7 +21,7 @@
     </Style>
 
     <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
-        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Black"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Foreground" Value="White"/>
@@ -37,11 +37,22 @@
     </Style>
     
     <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="#0d1217"></Setter>
+        <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="CornerRadius" Value="7"></Setter>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="White"/>
         
     </Style>
 
+    <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Margin" Value="5"></Setter>
+    </Style>
+
+    <Style x:Key="ToolBarStyle" TargetType="{x:Type ToolBar}">
+        <Setter Property="Background" Value="Black"></Setter>
+        <Setter Property="ToolBarTray.IsLocked" Value="True"></Setter>
+        <Setter Property="Height" Value="35"></Setter>
+    </Style>
 </ResourceDictionary>

@@ -47,7 +47,17 @@ namespace FinanceManager
             addCategory.ShowDialog();
 
             //витягання з бази доданої категорії
-            // виведення її в список категорій
+            //виведення її в список категорій
+        }
+
+        private void LimitHistory_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

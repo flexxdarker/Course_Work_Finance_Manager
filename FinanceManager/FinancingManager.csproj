@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ResoursesXAML\dollar.jpg" />
     <None Remove="ResoursesXAML\money-bag-glyph-black-icon-png_293021.jpg" />
+    <None Remove="ResoursesXAML\moneyBag.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +21,11 @@
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ResoursesXAML\dollar.jpg" />
+    <Resource Include="ResoursesXAML\moneyBag.jpg" />
   </ItemGroup>
 
 </Project>
