@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FinancingManager
@@ -18,11 +17,16 @@ namespace FinancingManager
     /// <summary>
     /// Interaction logic for ShowDetailsOfType.xaml
     /// </summary>
-    public partial class ShowDetailsOfType : Page
+    public partial class ShowDetailsOfType : Window
     {
         public ShowDetailsOfType()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
         }
     }
 }

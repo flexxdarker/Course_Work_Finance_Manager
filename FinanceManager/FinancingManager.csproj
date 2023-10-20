@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="FilesForWpf`s\vector-login-sign-icon.jpg" />
+    <None Remove="FilesForWpf\3687412.png" />
+    <None Remove="FilesForWpf\vector-login-sign-icon.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="FilesForWpf`s\vector-login-sign-icon.jpg">
+    <Resource Include="FilesForWpf\3687412.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FilesForWpf\vector-login-sign-icon.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

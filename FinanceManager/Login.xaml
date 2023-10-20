@@ -10,7 +10,7 @@
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Transparent" Background="Transparent" DockPanel.Dock="Top"  x:Name="loginBtn" Click="loginBtn_Click">
             <Border Width="70" Height="70" CornerRadius="6">
                 <Border.Background>
-                    <ImageBrush  Stretch="Fill" ImageSource="\FilesForWpf`s\vector-login-sign-icon.jpg"/>
+                    <ImageBrush  Stretch="Fill" ImageSource="\FilesForWpf\vector-login-sign-icon.jpg"/>
                 </Border.Background>
             </Border>
         </Button>
