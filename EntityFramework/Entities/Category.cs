@@ -15,6 +15,7 @@ namespace EntityFramework.Entities
         public virtual ICollection<Cost> Costs { get; set; }
         public int AcountId { get; set; }
         public virtual Acount Acount { get; set; }
-
+        public int LimitId { get; set; }
+        public virtual Limitt Limitt { get; set; }
     }
 }
