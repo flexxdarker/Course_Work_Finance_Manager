@@ -1,5 +1,6 @@
 ﻿using EntityFramework.Data;
 using EntityFramework.Entities;
+using EntityFramework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +11,20 @@ namespace EntityFramework.Repositories
 {
 	public interface IUoW
 	{
-		Repository<Acount> AcountRepo { get; set; }
-		Repository<Category> CategoryRepo { get; set; }
-		Repository<Cost> CostRepo { get; set; }
-		Repository<Incoum> IncoumRepo { get; set;}
+		IRepository<Acount> AcountRepo { get; set; }
+		IRepository<Category> CategoryRepo { get; set; }
+		IRepository<Cost> CostRepo { get; set; }
+		IRepository<Incoum> IncoumRepo { get; set;}
 	}
 	public class UnitOfWork
 	{
 		private static FinanceManagerDbContext context = new FinanceManagerDbContext();
-		private Repository<Acount> acountRepo;
-		private Repository<Category> categoryRepo;
-		private Repository<Cost> costRepo;
-		private Repository<Incoum> incoumRepo;
+		private IRepository<Acount> acountRepo;
+		private IRepository<Category> categoryRepo;
+		private IRepository<Cost> costRepo;
+		private IRepository<Incoum> incoumRepo;
 
-		public Repository<Acount> AcountRepo
+		public IRepository<Acount> AcountRepo
 		{
 			get
 			{
@@ -34,7 +35,7 @@ namespace EntityFramework.Repositories
 				return acountRepo;
 			}
 		}
-		public Repository<Category> CategoryRepo
+		public IRepository<Category> CategoryRepo
 		{
 			get
 			{
@@ -45,7 +46,7 @@ namespace EntityFramework.Repositories
 				return categoryRepo;
 			}
 		}
-		public Repository<Cost> CostRepo
+		public IRepository<Cost> CostRepo
 		{
 			get
 			{
@@ -56,7 +57,7 @@ namespace EntityFramework.Repositories
 				return costRepo;
 			}
 		}
-		public Repository<Incoum> IncoumRepo
+		public IRepository<Incoum> IncoumRepo
 		{
 			get
 			{
