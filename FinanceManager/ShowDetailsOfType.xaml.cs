@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EntityFramework.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,12 +20,23 @@ namespace FinancingManager
     /// </summary>
     public partial class ShowDetailsOfType : Window
     {
+        UnitOfWork UoW = new UnitOfWork();
         public ShowDetailsOfType()
         {
             InitializeComponent();
         }
 
-        private void ComboBox_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void byPrice_Selected(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void byDate_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void byName_Selected(object sender, RoutedEventArgs e)
         {
 
         }
