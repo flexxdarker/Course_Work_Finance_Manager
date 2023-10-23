@@ -6,7 +6,72 @@
         xmlns:local="clr-namespace:FinanceManager"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
 
-    </Grid>
+    <DockPanel Background="Black">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <ToolBar Grid.Column="0" Grid.ColumnSpan="3" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
+                <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
+                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyle}">999999999999</Label>
+                <Label Style="{StaticResource LabelStyle}">$</Label>
+                <Button Style="{StaticResource ButtonlStyle}" Click="ChangeLimit_Click">Change limit</Button>
+                <Button Style="{StaticResource ButtonlStyle}" Click="AddCategory_Click">Add category</Button>
+            </ToolBar>
+
+            <Border Width="70" Height="70" CornerRadius="6" Grid.Column="0" Grid.RowSpan="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Border.Background>
+                    <ImageBrush Stretch="Fill" ImageSource="\ResoursesXAML\dollar.jpg"/>
+                </Border.Background>
+            </Border>
+
+            <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Categoies(Names):</Label>
+                <ListBox x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}" MouseDoubleClick="ShowExpenses_DoubleClick"></ListBox>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Money($):</Label>
+                <ListBox x:Name="MoneyListBox" Grid.Row="1" Grid.Column="0" Style="{StaticResource ListBoxStyle}"></ListBox>
+
+                <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Percents(%):</Label>
+                <ListBox x:Name="PercentsListBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource ListBoxStyle}"></ListBox>
+
+            </Grid>
+
+            <ToolBar Grid.Row="1" Grid.ColumnSpan="2" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
+                <Label Style="{StaticResource LabelStyle}">Money was spent:</Label>
+                <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyle}">999999999999</Label>
+                <Label Style="{StaticResource LabelStyle}">$</Label>
+            </ToolBar>
+            
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Right" Click="Exit_Click" Width="60" Margin="0,0,5,0">Exit</Button>
+
+        </Grid>
+    </DockPanel>
 </Window>
