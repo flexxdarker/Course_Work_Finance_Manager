@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="FilesForWpf\3687412.png" />
+    <None Remove="FilesForWpf\vector-login-sign-icon.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
@@ -24,8 +29,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="ResoursesXAML\dollar.jpg" />
-    <Resource Include="ResoursesXAML\moneyBag.jpg" />
+    <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="FilesForWpf\3687412.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="FilesForWpf\vector-login-sign-icon.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
