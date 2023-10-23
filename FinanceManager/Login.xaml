@@ -8,11 +8,28 @@
         Title="Login" Height="200" Width="400">
     <DockPanel Background="Black">
         <Button HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Transparent" Background="Transparent" DockPanel.Dock="Top"  x:Name="loginBtn" Click="loginBtn_Click">
-            <Border Width="70" Height="70" CornerRadius="6">
-                <Border.Background>
-                    <ImageBrush  Stretch="Fill" ImageSource="\FilesForWpf`s\vector-login-sign-icon.jpg"/>
-                </Border.Background>
-            </Border>
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="70" Height="70" CornerRadius="6" x:Name="border">
+                        <Border.Background>
+                            <ImageBrush Stretch="Fill" ImageSource="\FilesForWpf\vector-login-sign-icon.jpg"/>
+                        </Border.Background>
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}" >
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderBrush" Value="White"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                                <Setter Property="CornerRadius" Value="20"/>
+                                <Style.Triggers>
+                                    <Trigger Property="Button.IsPressed" Value="True">
+                                        <Setter Property="Background" Value="Yellow"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
         <Grid DockPanel.Dock="Top">
             <Grid.ColumnDefinitions>
