@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EntityFramework\EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="FilesForWpf`s\vector-login-sign-icon.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
