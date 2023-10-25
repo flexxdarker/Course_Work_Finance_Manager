@@ -1,5 +1,8 @@
-﻿using System;
+﻿using EntityFramework.Entities;
+using EntityFramework.Repositories;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,16 +22,39 @@ namespace FinancingManager
     /// </summary>
     public partial class AddCategory : Window
     {
-        public AddCategory()
+        private IUoW uow;
+
+        public AddCategory(ref IUoW uow)
         {
             InitializeComponent();
+            this.uow = uow;
         }
         private void SaveCategory_Click(object sender, RoutedEventArgs e)
         {
-            //перевірка чи є категорія в базі
-            // додавання її в базу для подальшого виведення в список категорій
+            string NewName = CategoryTextBox.Text;
+            // перевірка чи є категорія в базі
+            try
+            {
+                var tmp = uow.CategoryRepo.Get(x => x.Name == NewName);
+                if (tmp.Count() != 0)
+                {
+                    MessageBox.Show("A category with that name already exists!");
+                    return;
+                }
+
+                // додавання її в базу для подальшого виведення в список категорій
+                int lastCategoryId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
+                int lastAccountId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
+                int lastLimitId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
+                uow.CategoryRepo.Insert(new Category { Name = NewName, Summ = 0, AcountId = lastAccountId, LimitId = lastLimitId });
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             CategoryTextBox.Text = string.Empty;
+            uow.Save();
             this.Close();
         }
 

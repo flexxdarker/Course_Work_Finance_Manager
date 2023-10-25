@@ -1,4 +1,6 @@
-﻿using FinancingManager;
+﻿using EntityFramework.Entities;
+using EntityFramework.Repositories;
+using FinancingManager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +21,10 @@ namespace FinanceManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
+        private IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         int Limit = 2000;
@@ -43,11 +47,26 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory();
+            
+            addCategory = new AddCategory(ref uow);
             addCategory.ShowDialog();
 
-            //витягання з бази доданої категорії
-            //виведення її в список категорій
+            try
+            {
+                //витягання з бази доданої категорії
+                int lastCategoryId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
+
+                //виведення її в список категорій
+                var lastCategory = uow.CategoryRepo.Get().Last();
+                CategoriesListBox.Items.Add(lastCategory.Name);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            uow.Save();
+            this.Close();
         }
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)
