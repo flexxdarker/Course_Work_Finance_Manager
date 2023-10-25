@@ -10,9 +10,6 @@
   <ItemGroup>
     <None Remove="FilesForWpf\dollar.jpg" />
     <None Remove="FilesForWpf\moneyBag.jpg" />
-    <None Remove="ResoursesXAML\dollar.jpg" />
-    <None Remove="ResoursesXAML\money-bag-glyph-black-icon-png_293021.jpg" />
-    <None Remove="ResoursesXAML\moneyBag.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,10 +40,6 @@
     <Resource Include="FilesForWpf\vector-login-sign-icon.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ResoursesXAML\" />
   </ItemGroup>
 
 </Project>

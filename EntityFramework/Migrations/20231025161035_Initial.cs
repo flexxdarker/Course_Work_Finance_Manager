@@ -7,7 +7,7 @@
 namespace EntityFramework.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -28,24 +28,16 @@ namespace EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "Limits",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Summ = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AcountId = table.Column<int>(type: "int", nullable: false)
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Acounts_AcountId",
-                        column: x => x.AcountId,
-                        principalTable: "Acounts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_Limits", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +57,34 @@ namespace EntityFramework.Migrations
                         name: "FK_Incoums_Acounts_AcountId",
                         column: x => x.AcountId,
                         principalTable: "Acounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Summ = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AcountId = table.Column<int>(type: "int", nullable: false),
+                    LimitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categories_Acounts_AcountId",
+                        column: x => x.AcountId,
+                        principalTable: "Acounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Categories_Limits_LimitId",
+                        column: x => x.LimitId,
+                        principalTable: "Limits",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -96,18 +116,23 @@ namespace EntityFramework.Migrations
                 values: new object[] { 1, "qwerty", "qwerty-1", 0m });
 
             migrationBuilder.InsertData(
+                table: "Limits",
+                columns: new[] { "Id", "Value" },
+                values: new object[] { 1, 10000m });
+
+            migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "AcountId", "Name", "Summ" },
+                columns: new[] { "Id", "AcountId", "LimitId", "Name", "Summ" },
                 values: new object[,]
                 {
-                    { 1, 1, "Food", 0m },
-                    { 2, 1, "Cafe", 0m },
-                    { 3, 1, "Entertainment", 0m },
-                    { 4, 1, "Transport", 0m },
-                    { 5, 1, "Health", 0m },
-                    { 6, 1, "Pet", 0m },
-                    { 7, 1, "Family", 0m },
-                    { 8, 1, "Clothes", 0m }
+                    { 1, 1, 1, "Food", 0m },
+                    { 2, 1, 1, "Cafe", 0m },
+                    { 3, 1, 1, "Entertainment", 0m },
+                    { 4, 1, 1, "Transport", 0m },
+                    { 5, 1, 1, "Health", 0m },
+                    { 6, 1, 1, "Pet", 0m },
+                    { 7, 1, 1, "Family", 0m },
+                    { 8, 1, 1, "Clothes", 0m }
                 });
 
             migrationBuilder.InsertData(
@@ -135,6 +160,11 @@ namespace EntityFramework.Migrations
                 column: "AcountId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_LimitId",
+                table: "Categories",
+                column: "LimitId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Costs_CategoryId",
                 table: "Costs",
                 column: "CategoryId");
@@ -159,6 +189,9 @@ namespace EntityFramework.Migrations
 
             migrationBuilder.DropTable(
                 name: "Acounts");
+
+            migrationBuilder.DropTable(
+                name: "Limits");
         }
     }
 }

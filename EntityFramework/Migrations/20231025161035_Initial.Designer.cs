@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFramework.Migrations
 {
     [DbContext(typeof(FinanceManagerDbContext))]
-    [Migration("20231020171658_First")]
-    partial class First
+    [Migration("20231025161035_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,9 @@ namespace EntityFramework.Migrations
                     b.Property<int>("AcountId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LimitId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -79,6 +82,8 @@ namespace EntityFramework.Migrations
 
                     b.HasIndex("AcountId");
 
+                    b.HasIndex("LimitId");
+
                     b.ToTable("Categories");
 
                     b.HasData(
@@ -86,6 +91,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 1,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Food",
                             Summ = 0m
                         },
@@ -93,6 +99,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 2,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Cafe",
                             Summ = 0m
                         },
@@ -100,6 +107,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 3,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Entertainment",
                             Summ = 0m
                         },
@@ -107,6 +115,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 4,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Transport",
                             Summ = 0m
                         },
@@ -114,6 +123,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 5,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Health",
                             Summ = 0m
                         },
@@ -121,6 +131,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 6,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Pet",
                             Summ = 0m
                         },
@@ -128,6 +139,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 7,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Family",
                             Summ = 0m
                         },
@@ -135,6 +147,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 8,
                             AcountId = 1,
+                            LimitId = 1,
                             Name = "Clothes",
                             Summ = 0m
                         });
@@ -229,6 +242,29 @@ namespace EntityFramework.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EntityFramework.Entities.Limit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Limits");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Value = 10000m
+                        });
+                });
+
             modelBuilder.Entity("EntityFramework.Entities.Category", b =>
                 {
                     b.HasOne("EntityFramework.Entities.Acount", "Acount")
@@ -237,7 +273,15 @@ namespace EntityFramework.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EntityFramework.Entities.Limit", "Limit")
+                        .WithMany("Categories")
+                        .HasForeignKey("LimitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Acount");
+
+                    b.Navigation("Limit");
                 });
 
             modelBuilder.Entity("EntityFramework.Entities.Cost", b =>
@@ -272,6 +316,11 @@ namespace EntityFramework.Migrations
             modelBuilder.Entity("EntityFramework.Entities.Category", b =>
                 {
                     b.Navigation("Costs");
+                });
+
+            modelBuilder.Entity("EntityFramework.Entities.Limit", b =>
+                {
+                    b.Navigation("Categories");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace EntityFramework.Data.Configurations
 {
-    public class LimitConfig: IEntityTypeConfiguration<Limitt>
+    public class LimitConfig: IEntityTypeConfiguration<Limit>
     {
-         public void Configure(EntityTypeBuilder<Limitt> builder)
+         public void Configure(EntityTypeBuilder<Limit> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.HasMany(x => x.Categories).WithOne(x => x.Limitt).HasForeignKey(x => x.LimitId);
+            builder.HasMany(x => x.Categories).WithOne(x => x.Limit).HasForeignKey(x => x.LimitId);
         }
     }
 }
