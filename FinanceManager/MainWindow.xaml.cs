@@ -1,4 +1,6 @@
 ﻿using FinancingManager;
+using LiveCharts;
+using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,11 @@ namespace FinanceManager
         {
             InitializeComponent();
             LimitLabel.Content = Limit.ToString();
-        }
+            Diagram.Series.Add(new PieSeries { Title= "la",Fill=Brushes.LightGray, StrokeThickness = 0,Values = new ChartValues<double> {20.0} });
+			Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
+			Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
+			Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
+		}
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
             changeLimitWindow = new ChangeLimitWindow();
@@ -59,5 +65,10 @@ namespace FinanceManager
         {
 
         }
-    }
+
+		private void Diagram_Loaded(object sender, RoutedEventArgs e)
+		{
+
+		}
+	}
 }
