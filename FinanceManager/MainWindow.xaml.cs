@@ -39,7 +39,7 @@ namespace FinanceManager
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
         }
-		}
+		
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
             changeLimitWindow = new ChangeLimitWindow();
