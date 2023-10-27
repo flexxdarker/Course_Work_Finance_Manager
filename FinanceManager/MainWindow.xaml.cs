@@ -1,4 +1,6 @@
-﻿using FinancingManager;
+using EntityFramework.Entities;
+using EntityFramework.Repositories;
+using FinancingManager;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System;
@@ -21,8 +23,10 @@ namespace FinanceManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
+        private IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         int Limit = 2000;
@@ -31,9 +35,10 @@ namespace FinanceManager
             InitializeComponent();
             LimitLabel.Content = Limit.ToString();
             Diagram.Series.Add(new PieSeries { Title= "la",Fill=Brushes.LightGray, StrokeThickness = 0,Values = new ChartValues<double> {20.0} });
-			Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
-			Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
-			Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
+        }
 		}
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
@@ -49,11 +54,26 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory();
+            
+            addCategory = new AddCategory(ref uow);
             addCategory.ShowDialog();
 
-            //витягання з бази доданої категорії
-            //виведення її в список категорій
+            try
+            {
+                //витягання з бази доданої категорії 
+                var lastCategory = uow.CategoryRepo.Get().Last();
+                
+                //виведення її в список категорій
+                CategoriesListBox.Items.Add(lastCategory.Name);
+                MoneyListBox.Items.Add(lastCategory.Summ);
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            uow.Save();
         }
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)

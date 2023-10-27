@@ -16,6 +16,6 @@ namespace EntityFramework.Entities
         public int AcountId { get; set; }
         public virtual Acount Acount { get; set; }
         public int LimitId { get; set; }
-        public virtual Limitt Limitt { get; set; }
+        public virtual Limit Limit { get; set; }
     }
 }

@@ -25,7 +25,7 @@
 
             <ToolBar Grid.Column="0" Grid.ColumnSpan="3" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
                 <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
-                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyle}">999999999999</Label>
+                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyle}">0</Label>
                 <Label Style="{StaticResource LabelStyle}">$</Label>
                 <Button Style="{StaticResource ButtonlStyle}" Click="ChangeLimit_Click">Change limit</Button>
                 <Button Style="{StaticResource ButtonlStyle}" Click="AddCategory_Click">Add category</Button>
@@ -67,7 +67,7 @@
 
             <ToolBar Grid.Row="1" Grid.ColumnSpan="2" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
                 <Label Style="{StaticResource LabelStyle}">Money was spent:</Label>
-                <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyle}">999999999999</Label>
+                <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyle}">0</Label>
                 <Label Style="{StaticResource LabelStyle}">$</Label>
             </ToolBar>
             
