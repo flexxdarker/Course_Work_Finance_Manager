@@ -51,8 +51,16 @@ namespace FinanceManager
 
             var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name);
             var Money = uow.CategoryRepo.Get().Select(x => x.Summ);
-            CategoriesListBox.ItemsSource = CategoryNames;
-            MoneyListBox.ItemsSource = Money;
+            //CategoriesListBox.ItemsSource = CategoryNames;
+            //MoneyListBox.ItemsSource = Money;
+            foreach (var category in CategoryNames)
+            {
+                CategoriesListBox.Items.Add(category);
+            }
+            foreach (var money in Money)
+            {
+                MoneyListBox.Items.Add(money);
+            }
             var Categories = uow.CategoryRepo.Get();
             foreach (var item in Categories)
             {
