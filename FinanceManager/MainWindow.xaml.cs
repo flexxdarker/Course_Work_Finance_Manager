@@ -98,6 +98,7 @@ namespace FinanceManager
             {
                 list.Add((string)item);
             }
+            CategoriesListBox.Items.Clear();
             list.Sort();
             foreach (var item in list)
             {
@@ -112,6 +113,7 @@ namespace FinanceManager
             {
                 list.Add((string)item);
             }
+            MoneyListBox.Items.Clear();
             list.Sort();
             foreach (var item in list)
             {
@@ -126,6 +128,7 @@ namespace FinanceManager
             {
                 list.Add((string)item);
             }
+            PercentsListBox.Items.Clear(); 
             list.Sort();
             foreach (var item in list)
             {
