@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinanceManager"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="1000">
 
     <DockPanel Background="Black">
         <Grid>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -72,6 +74,11 @@
             <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>
             <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Right" Click="Exit_Click" Width="60" Margin="0,0,5,0">Exit</Button>
 
+            <StackPanel Grid.Row="2"  Grid.ColumnSpan="2">
+                <lvc:PieChart x:Name="Diagram" StartingRotationAngle="0"  Margin="5,5,5,0" Loaded="Diagram_Loaded" Height="360"/>
+            </StackPanel>
+            
         </Grid>
+   
     </DockPanel>
 </Window>

@@ -3,6 +3,7 @@ using EntityFramework.Repositories;
 using FinanceManager;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,12 +32,16 @@ namespace FinancingManager
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
             Acount acount = UoW.AcountRepo.GetByID(1);
-            if (acount.Login == loginTb.Text && acount.Password == passwordTb.Text) 
+            if (acount.Login == loginTb.Text && acount.Password == passwordTb.Text)
             {
                 MainWindow mw = new MainWindow();
                 mw.Show();
                 this.Close();
             }
+            //else if (acount.Login == loginTb.Text || acount.Password == passwordTb.Text)
+            //{
+            //    notSuccedLogLabel.Visibility = Visibility.Visible;
+            //}
         }
     }
 }

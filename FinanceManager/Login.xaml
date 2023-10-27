@@ -45,7 +45,7 @@
             <TextBox x:Name= "loginTb" Background="LightGray" Margin="2,2,6,2" Grid.Column="1"/>
             <Label Content= "Password: " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Foreground="White"/>
             <TextBox x:Name="passwordTb" Grid.Row="1" Grid.Column="1" Background="LightGray" Margin="2,2,6,2"/>
-            <Label Name="notSuccedLogLabel" Grid.ColumnSpan="2" Grid.Row="2" Foreground="Red"/>
+            <TextBlock Name="notSuccedLogLabel" Grid.ColumnSpan="2" Grid.Row="2" Foreground="Red" Text="Not correct password of login" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden"/>
         </Grid>
     </DockPanel>
 </Window>
