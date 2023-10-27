@@ -29,17 +29,36 @@ namespace FinanceManager
         private IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
-        int Limit = 2000;
+        const decimal defaultLimit = 10000;
         public MainWindow()
         {
             InitializeComponent();
-            LimitLabel.Content = Limit.ToString();
             Diagram.Series.Add(new PieSeries { Title= "la",Fill=Brushes.LightGray, StrokeThickness = 0,Values = new ChartValues<double> {20.0} });
             Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
+
+
+            decimal limit = defaultLimit;
+            var limits = uow.LimitRepo.Get();
+            if (limits.Count() == 0)
+                LimitLabel.Content = defaultLimit;
+            else
+            {
+                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                LimitLabel.Content = limit;
+            }
+
+            var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name);
+            var Money = uow.CategoryRepo.Get().Select(x => x.Summ);
+            CategoriesListBox.ItemsSource = CategoryNames;
+            MoneyListBox.ItemsSource = Money;
+            var Categories = uow.CategoryRepo.Get();
+            foreach (var item in Categories)
+            {
+                PercentsListBox.Items.Add($"{(item.Summ * 100) / limit} %");
+            }
         }
-		}
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
             changeLimitWindow = new ChangeLimitWindow();
@@ -66,7 +85,6 @@ namespace FinanceManager
                 //виведення її в список категорій
                 CategoriesListBox.Items.Add(lastCategory.Name);
                 MoneyListBox.Items.Add(lastCategory.Summ);
-                
             }
             catch (Exception ex)
             {
