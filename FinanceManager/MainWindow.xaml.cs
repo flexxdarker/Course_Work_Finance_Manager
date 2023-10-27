@@ -32,6 +32,7 @@ namespace FinanceManager
         {
             InitializeComponent();
             LimitLabel.Content = Limit.ToString();
+
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
@@ -53,11 +54,13 @@ namespace FinanceManager
 
             try
             {
-
                 //витягання з бази доданої категорії 
                 var lastCategory = uow.CategoryRepo.Get().Last();
+                
                 //виведення її в список категорій
                 CategoriesListBox.Items.Add(lastCategory.Name);
+                MoneyListBox.Items.Add(lastCategory.Summ);
+                
             }
             catch (Exception ex)
             {

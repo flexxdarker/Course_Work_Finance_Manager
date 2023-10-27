@@ -35,18 +35,18 @@ namespace FinancingManager
             // перевірка чи є категорія в базі
             try
             {
-                //var tmp = uow.CategoryRepo.Get(x => x.Name == NewName);
-                //if (tmp.Count() != 0)
-                //{
-                //    MessageBox.Show("A category with that name already exists!");
-                //    return;
-                //}
+                Category? tmp = uow.CategoryRepo.Get(x => x.Name == NewName).LastOrDefault();
+                if (tmp != null)
+                {
+                    MessageBox.Show("A category with that name already exists!");
+                    return;
+                }
 
                 // додавання її в базу для подальшого виведення в список категорій
-                int lastCategoryId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
-                int lastAccountId = uow.AcountRepo.Get(x => x.Id != -1).Max(x => x.Id);
-                int lastLimitId = uow.LimitRepo.Get(x => x.Id != -1).Max(x => x.Id);
-                uow.CategoryRepo.Insert(new Category { Name = NewName, Summ = 0, AcountId = lastAccountId, LimitId = lastLimitId });
+                int lastCategoryId = uow.CategoryRepo.Get().Select(x => x.Id).Last();
+                int lastAccountId = uow.AcountRepo.Get().Select(x => x.Id).Last();
+                int lastLimitId = uow.LimitRepo.Get().Select(x => x.Id).Last();
+                uow.CategoryRepo.Insert(new Category { Name = NewName, Summ = 0, AcountId = lastAccountId, LimitId = lastLimitId});
             }
             catch(Exception ex)
             {
