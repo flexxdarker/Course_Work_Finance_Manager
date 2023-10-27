@@ -20,11 +20,10 @@
             </Grid.RowDefinitions>
             <ComboBox Grid.Row="1" Margin="0,10,0,10" Background="Black" BorderBrush="White" BorderThickness="2" >
                 <ComboBoxItem Name="byName" Content="Sort By Name" Selected="byName_Selected"/>
-                <ComboBoxItem Name="byDate" Content="Sort By Date" Selected="byDate_Selected"/>
                 <ComboBoxItem Name="byPrice" Content="Sort By Price" Selected="byPrice_Selected"/>
             </ComboBox>
-             <ListBox Background="Black" BorderBrush="White" BorderThickness="2" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Name="listBox">
-                 <ListBoxItem Background="Black" BorderBrush="White"/>
+            <ListBox Background="Black" BorderBrush="White" BorderThickness="2" FontSize="20" Foreground="White" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Name="listBox">
+                 <ListBoxItem Background="Black" BorderBrush="White" />
              </ListBox>
              <Button Margin="2" HorizontalAlignment="Center" Click="deleteBtn_Click" VerticalAlignment="Center" Background="Black" Grid.Column="1" Grid.Row="1"  DockPanel.Dock="Top" BorderThickness="0"  x:Name="deleteBtn">
                  <Grid>
