@@ -46,6 +46,7 @@ namespace FinancingManager
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
             
+
         }
     }
 }
