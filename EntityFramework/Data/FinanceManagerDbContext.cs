@@ -17,7 +17,7 @@ namespace EntityFramework.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            string conn = "Data Source=(localdb)\\ProjectModels;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;";
+            string conn = "Data Source=(localdb)\\ProjectModels;Initial Catalog=FinanceManagerDB;Integrated Security=True;Connect Timeout=30;";
             optionsBuilder.UseSqlServer(conn);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,16 +31,21 @@ namespace EntityFramework.Data
             
             });
 
+            modelBuilder.Entity<Limit>().HasData(new[]
+            {
+                new Limit() { Id = 1, Value = 10000}
+            });
+
             modelBuilder.Entity<Category>().HasData(new[]
             { 
-                new Category() { Id = 1, Name = "Food", Summ = 0, AcountId = 1 },           
-                new Category() { Id = 2, Name = "Cafe", Summ = 0, AcountId = 1 },           
-                new Category() { Id = 3, Name = "Entertainment", Summ = 0, AcountId = 1 },            
-                new Category() { Id = 4, Name = "Transport", Summ = 0, AcountId = 1 },            
-                new Category() { Id = 5, Name = "Health", Summ = 0, AcountId = 1 },            
-                new Category() { Id = 6, Name = "Pet", Summ = 0, AcountId = 1 },            
-                new Category() { Id = 7, Name = "Family", Summ = 0, AcountId = 1 },            
-                new Category() { Id = 8, Name = "Clothes", Summ = 0, AcountId = 1 }            
+                new Category() { Id = 1, Name = "Food", Summ = 0, AcountId = 1, LimitId = 1},           
+                new Category() { Id = 2, Name = "Cafe", Summ = 0, AcountId = 1 , LimitId = 1},           
+                new Category() { Id = 3, Name = "Entertainment", Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 4, Name = "Transport", Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 5, Name = "Health", Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 6, Name = "Pet", Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 7, Name = "Family", Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 8, Name = "Clothes", Summ = 0, AcountId = 1, LimitId = 1 }            
             });
 
             modelBuilder.Entity<Cost>().HasData(new[]
@@ -55,17 +60,14 @@ namespace EntityFramework.Data
                 new Incoum() { Id = 1, Name = "Salary", Price = 10200, AcountId= 1},
                 new Incoum() { Id = 2, Name = "Hospital", Price = 3000, AcountId = 1}
             });
-
         }
 
 
-
-
-
-        DbSet<Acount> Acounts { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Cost> Costs { get; set; }
-        DbSet<Incoum> Incoums { get; set;}
+        public DbSet<Acount> Acounts { get; set; }
+        public DbSet<Limit> Limits { get; set;}
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Cost> Costs { get; set; }
+        public DbSet<Incoum> Incoums { get; set;}
     }
 
 

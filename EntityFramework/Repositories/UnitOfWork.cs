@@ -11,20 +11,24 @@ namespace EntityFramework.Repositories
 {
 	public interface IUoW
 	{
-		IRepository<Acount> AcountRepo { get; set; }
-		IRepository<Category> CategoryRepo { get; set; }
-		IRepository<Cost> CostRepo { get; set; }
-		IRepository<Incoum> IncoumRepo { get; set;}
-	}
-	public class UnitOfWork
-	{
-		private static FinanceManagerDbContext context = new FinanceManagerDbContext();
-		private IRepository<Acount> acountRepo;
-		private IRepository<Category> categoryRepo;
-		private IRepository<Cost> costRepo;
-		private IRepository<Incoum> incoumRepo;
+        Repository<Acount> AcountRepo { get; }
+        Repository<Limit> LimitRepo { get;}
+        Repository<Category> CategoryRepo { get; }
+        Repository<Cost> CostRepo { get; }
+        Repository<Incoum> IncoumRepo { get; }
 
-		public IRepository<Acount> AcountRepo
+		void Save();
+	}
+	public class UnitOfWork : IUoW, IDisposable
+    {
+		private static FinanceManagerDbContext context = new FinanceManagerDbContext();
+		private Repository<Acount> acountRepo;
+		private Repository<Limit> limitRepo;
+		private Repository<Category> categoryRepo;
+		private Repository<Cost> costRepo;
+		private Repository<Incoum> incoumRepo;
+
+		public Repository<Acount> AcountRepo
 		{
 			get
 			{
@@ -35,7 +39,20 @@ namespace EntityFramework.Repositories
 				return acountRepo;
 			}
 		}
-		public IRepository<Category> CategoryRepo
+
+        public Repository<Limit> LimitRepo
+        {
+            get
+            {
+                if (this.limitRepo == null)
+                {
+                    this.limitRepo = new Repository<Limit>(context);
+                }
+                return limitRepo;
+            }
+        }
+
+        public Repository<Category> CategoryRepo
 		{
 			get
 			{
@@ -46,7 +63,7 @@ namespace EntityFramework.Repositories
 				return categoryRepo;
 			}
 		}
-		public IRepository<Cost> CostRepo
+		public Repository<Cost> CostRepo
 		{
 			get
 			{
@@ -57,7 +74,7 @@ namespace EntityFramework.Repositories
 				return costRepo;
 			}
 		}
-		public IRepository<Incoum> IncoumRepo
+		public Repository<Incoum> IncoumRepo
 		{
 			get
 			{
@@ -68,7 +85,8 @@ namespace EntityFramework.Repositories
 				return incoumRepo;
 			}
 		}
-		public void Save()
+
+        public void Save()
 		{
 			context.SaveChanges();
 		}
