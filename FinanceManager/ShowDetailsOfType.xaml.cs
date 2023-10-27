@@ -24,6 +24,8 @@ namespace FinancingManager
         public ShowDetailsOfType()
         {
             InitializeComponent();
+
+            
         }
 
         private void byPrice_Selected(object sender, RoutedEventArgs e)
@@ -39,6 +41,11 @@ namespace FinancingManager
         private void byName_Selected(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }
