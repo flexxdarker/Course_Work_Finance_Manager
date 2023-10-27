@@ -90,5 +90,51 @@ namespace FinanceManager
 		{
 
 		}
-	}
+
+        private void SortByName(object sender, RoutedEventArgs e)
+        {
+            List<string>list = new List<string>();
+            foreach (var item in CategoriesListBox.Items)
+            {
+                list.Add((string)item);
+            }
+            CategoriesListBox.Items.Clear();
+            list.Sort();
+            foreach (var item in list)
+            {
+                CategoriesListBox.Items.Add(item);
+            }
+        }
+
+        private void SortByMoney(object sender, RoutedEventArgs e)
+        {
+            List<string>list = new List<string>();
+            foreach (var item in MoneyListBox.Items)
+            {
+                list.Add((string)item);
+            }
+            MoneyListBox.Items.Clear();
+            list.Sort();
+            foreach (var item in list)
+            {
+                MoneyListBox.Items.Add(item);
+            }
+        }
+
+        private void SortByPercents(object sender, RoutedEventArgs e)
+        {
+            List<string> list = new List<string>();
+            foreach (var item in PercentsListBox.Items)
+            {
+                list.Add((string)item);
+            }
+            PercentsListBox.Items.Clear(); 
+            list.Sort();
+            foreach (var item in list)
+            {
+                PercentsListBox.Items.Add(item);  
+            }
+
+        }
+    }
 }
