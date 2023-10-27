@@ -53,11 +53,10 @@ namespace FinanceManager
 
             try
             {
-                //витягання з бази доданої категорії
-                int lastCategoryId = uow.CategoryRepo.Get(x => x.Id != -1).Max(x => x.Id);
 
-                //виведення її в список категорій
+                //витягання з бази доданої категорії 
                 var lastCategory = uow.CategoryRepo.Get().Last();
+                //виведення її в список категорій
                 CategoriesListBox.Items.Add(lastCategory.Name);
             }
             catch (Exception ex)
@@ -66,7 +65,6 @@ namespace FinanceManager
             }
 
             uow.Save();
-            this.Close();
         }
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)
