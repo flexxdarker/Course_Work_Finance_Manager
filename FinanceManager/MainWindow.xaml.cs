@@ -55,11 +55,11 @@ namespace FinanceManager
             //MoneyListBox.ItemsSource = Money;
             foreach (var category in CategoryNames)
             {
-                CategoriesListBox.Items.Add(category);
+                CategoriesListBox.Items.Add(category.ToString());
             }
             foreach (var money in Money)
             {
-                MoneyListBox.Items.Add(money);
+                MoneyListBox.Items.Add(money.ToString());
             }
             var Categories = uow.CategoryRepo.Get();
             foreach (var item in Categories)
