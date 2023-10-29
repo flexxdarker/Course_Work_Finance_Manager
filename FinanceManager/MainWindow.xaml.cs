@@ -15,6 +15,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -30,6 +31,7 @@ namespace FinanceManager
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
+        decimal limit;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +41,7 @@ namespace FinanceManager
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
 
 
-            decimal limit = defaultLimit;
+            limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
             if (limits.Count() == 0)
                 LimitLabel.Content = defaultLimit;
@@ -49,6 +51,13 @@ namespace FinanceManager
                 LimitLabel.Content = limit;
             }
 
+            FillListBoxes();
+        }
+        private void FillListBoxes()
+        {
+            PercentsListBox.Items.Clear();
+            CategoriesListBox.Items.Clear();
+            MoneyListBox.Items.Clear();
             var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name);
             var Money = uow.CategoryRepo.Get().Select(x => x.Summ);
             //CategoriesListBox.ItemsSource = CategoryNames;
@@ -67,12 +76,26 @@ namespace FinanceManager
                 PercentsListBox.Items.Add($"{(item.Summ * 100) / limit} %");
             }
         }
-        
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
-            changeLimitWindow = new ChangeLimitWindow();
+            changeLimitWindow = new ChangeLimitWindow(ref uow);
             changeLimitWindow.ShowDialog();
+
             // витягання з бази останнього елементу з таблиці лімітів
+            try
+            {
+                var lastLimit = uow.LimitRepo.Get().Last();
+                limit = lastLimit.Value;
+                LimitLabel.Content = limit;
+
+                FillListBoxes();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            uow.Save();
         }
 
         private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
