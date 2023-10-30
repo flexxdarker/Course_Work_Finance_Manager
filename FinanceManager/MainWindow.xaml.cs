@@ -15,8 +15,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
@@ -30,6 +32,7 @@ namespace FinanceManager
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
+        decimal limit = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,7 +42,7 @@ namespace FinanceManager
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
 
 
-            decimal limit = defaultLimit;
+            limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
             if (limits.Count() == 0)
                 LimitLabel.Content = defaultLimit;
@@ -90,10 +93,18 @@ namespace FinanceManager
             {
                 //витягання з бази доданої категорії 
                 var lastCategory = uow.CategoryRepo.Get().Last();
-                
+
                 //виведення її в список категорій
+                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
                 CategoriesListBox.Items.Add(lastCategory.Name);
-                MoneyListBox.Items.Add(lastCategory.Summ);
+                //MoneyListBox.Items.Add(lastCategory.Summ);
+
+                string summ = (lastCategory.Summ % 1 == 0) ? ($"{lastCategory.Summ}.00") : (lastCategory.Summ.ToString());
+                MoneyListBox.Items.Add(summ);
+                //number % 1 == 0
+
+                //
+                PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
             }
             catch (Exception ex)
             {
