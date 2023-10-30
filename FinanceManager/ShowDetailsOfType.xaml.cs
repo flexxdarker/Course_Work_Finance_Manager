@@ -37,14 +37,14 @@ namespace FinancingManager
 		public ShowDetailsOfType()
         {
 			InitializeComponent();
-			category = "Health";
+			category = "Clothes";
 			FillListBox(category);
 		}
 
 		public ShowDetailsOfType(string? Category)
         {
             InitializeComponent();
-			category = Category ?? "Health";
+			category = Category ?? "Clothing";
 			FillListBox(category);
 		}
 
@@ -68,6 +68,7 @@ namespace FinancingManager
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
 			UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
+			listBox.Items.RemoveAt(listBox.SelectedIndex);
 			UoW.Save();
 		}
     }
