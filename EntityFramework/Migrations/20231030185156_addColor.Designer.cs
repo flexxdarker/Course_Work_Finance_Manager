@@ -3,6 +3,7 @@ using EntityFramework.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EntityFramework.Migrations
 {
     [DbContext(typeof(FinanceManagerDbContext))]
-    partial class FinanceManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030185156_addColor")]
+    partial class addColor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,7 +103,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 2,
                             AcountId = 1,
-                            Color = -23296,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Cafe",
                             Summ = 0m
@@ -109,7 +112,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 3,
                             AcountId = 1,
-                            Color = -984833,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Entertainment",
                             Summ = 0m
@@ -118,7 +121,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 4,
                             AcountId = 1,
-                            Color = -1828,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Transport",
                             Summ = 0m
@@ -127,7 +130,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 5,
                             AcountId = 1,
-                            Color = -5658199,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Health",
                             Summ = 0m
@@ -145,7 +148,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 7,
                             AcountId = 1,
-                            Color = -65536,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Family",
                             Summ = 0m
@@ -154,7 +157,7 @@ namespace EntityFramework.Migrations
                         {
                             Id = 8,
                             AcountId = 1,
-                            Color = -2252579,
+                            Color = -9404272,
                             LimitId = 1,
                             Name = "Clothes",
                             Summ = 0m

@@ -1,7 +1,9 @@
 ﻿using EntityFramework.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,9 @@ namespace EntityFramework.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+             modelBuilder.Entity<Category>()
+            .Property(t => t.Color)
+            .HasConversion<ColorToInt32Converter>();
 
             modelBuilder.Entity<Acount>().HasData(new[]
             {
@@ -38,14 +42,14 @@ namespace EntityFramework.Data
 
             modelBuilder.Entity<Category>().HasData(new[]
             { 
-                new Category() { Id = 1, Name = "Food", Summ = 0, AcountId = 1, LimitId = 1},           
-                new Category() { Id = 2, Name = "Cafe", Summ = 0, AcountId = 1 , LimitId = 1},           
-                new Category() { Id = 3, Name = "Entertainment", Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 4, Name = "Transport", Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 5, Name = "Health", Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 6, Name = "Pet", Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 7, Name = "Family", Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 8, Name = "Clothes", Summ = 0, AcountId = 1, LimitId = 1 }            
+                new Category() { Id = 1, Name = "Food",Color = Color.SlateGray, Summ = 0, AcountId = 1, LimitId = 1},           
+                new Category() { Id = 2, Name = "Cafe", Color = Color.Orange,Summ = 0, AcountId = 1 , LimitId = 1},           
+                new Category() { Id = 3, Name = "Entertainment",Color = Color.AliceBlue, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 4, Name = "Transport",Color = Color.Cornsilk, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 5, Name = "Health",Color = Color.DarkGray, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 6, Name = "Pet", Color = Color.SlateGray,Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 7, Name = "Family", Color = Color.Red, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 8, Name = "Clothes",  Color = Color.Plum, Summ = 0, AcountId = 1, LimitId = 1 }            
             });
 
             modelBuilder.Entity<Cost>().HasData(new[]
@@ -69,6 +73,9 @@ namespace EntityFramework.Data
         public DbSet<Cost> Costs { get; set; }
         public DbSet<Incoum> Incoums { get; set;}
     }
-
+    class ColorToInt32Converter : ValueConverter<Color, int> {
+    public ColorToInt32Converter()
+        : base(c => c.ToArgb(), v => Color.FromArgb(v)) { }
+}
 
 }

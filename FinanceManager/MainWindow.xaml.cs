@@ -22,6 +22,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
+ 
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -32,15 +35,30 @@ namespace FinanceManager
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
-        decimal limit = 0;
+        decimal limit = 1;
         public MainWindow()
         {
             InitializeComponent();
-            Diagram.Series.Add(new PieSeries { Title= "la",Fill=Brushes.LightGray, StrokeThickness = 0,Values = new ChartValues<double> {20.0} });
-            Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
-            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
-            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
 
+            Random r = new Random();
+           // Color randomColor = (Color)random.Next(Enum.GetNames(typeof(Color)).Length);
+ 
+            //var c = (System.Windows.Media.Color)Enum.ToObject(typeof(System.Windows.Media.Color), random.Next(Enum.GetNames(typeof(System.Windows.Media.Color)).Length));
+
+            foreach (var item in uow.CategoryRepo.Get())
+            {
+               Diagram.Series.Add(new PieSeries { 
+                   
+                   Title= item.Name,
+                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)) /*new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 233)))*/, 
+                   StrokeThickness = 0,
+                   Values = new ChartValues<double> 
+                   { 
+                       (Convert.ToDouble((item.Summ / 100)))
+                   }
+               });
+            }
+       
 
             limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
@@ -121,7 +139,7 @@ namespace FinanceManager
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
 		private void Diagram_Loaded(object sender, RoutedEventArgs e)
@@ -155,6 +173,12 @@ namespace FinanceManager
             Sort(PercentsListBox);
         }
 
-        private void CategoriesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => ShowExpenses_DoubleClick = true;//showDetailsOfType = new ShowDetailsOfType();//showDetailsOfType.ShowDialog();
+        private void CategoriesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectedObject = CategoriesListBox.SelectedItem.ToString();
+
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
+            showDetails.ShowDialog();
+        }
     }
 }
