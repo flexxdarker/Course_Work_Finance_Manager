@@ -155,6 +155,6 @@ namespace FinanceManager
             Sort(PercentsListBox);
         }
 
-
+        private void CategoriesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => ShowExpenses_DoubleClick = true;//showDetailsOfType = new ShowDetailsOfType();//showDetailsOfType.ShowDialog();
     }
 }
