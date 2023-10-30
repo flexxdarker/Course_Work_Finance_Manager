@@ -18,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
@@ -32,6 +33,7 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -113,10 +115,18 @@ namespace FinanceManager
             {
                 //витягання з бази доданої категорії 
                 var lastCategory = uow.CategoryRepo.Get().Last();
-                
+
                 //виведення її в список категорій
+                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
                 CategoriesListBox.Items.Add(lastCategory.Name);
-                MoneyListBox.Items.Add(lastCategory.Summ);
+                //MoneyListBox.Items.Add(lastCategory.Summ);
+
+                string summ = (lastCategory.Summ % 1 == 0) ? ($"{lastCategory.Summ}.00") : (lastCategory.Summ.ToString());
+                MoneyListBox.Items.Add(summ);
+                //number % 1 == 0
+
+                //
+                PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
             }
             catch (Exception ex)
             {
