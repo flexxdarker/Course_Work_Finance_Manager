@@ -23,5 +23,10 @@ namespace FinancingManager
         {
             InitializeComponent();
         }
-    }
+
+		private void AddCostBtn_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+	}
 }

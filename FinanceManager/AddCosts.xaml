@@ -26,5 +26,6 @@
             <Label Content="Price: " Foreground="White" Background="Black" Grid.Row="2" FontSize="20"/>
             <TextBox Name="PriceTb" Foreground="White" Background="Black" Grid.Row="2" Grid.Column="1" FontSize="17" BorderBrush="White" Margin="5"/>
         </Grid>
+        <Button DockPanel.Dock="Top" Name="AddCostBtn" Content="Add Cost" Background="Black" Foreground="White" BorderBrush="White" Click="AddCostBtn_Click" VerticalAlignment="Center" Height="50" Width="100"/>
     </DockPanel>
 </Window>
