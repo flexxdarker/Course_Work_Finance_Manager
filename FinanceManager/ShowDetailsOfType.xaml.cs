@@ -70,5 +70,10 @@ namespace FinancingManager
 			UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
 			UoW.Save();
 		}
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,8 +24,13 @@ namespace FinancingManager
     public partial class AddCategory : Window
     {
         private IUoW uow;
-
-        public AddCategory(ref IUoW uow)
+        public Category Category {get; set; }
+        public AddCategory()
+        {
+            InitializeComponent();
+           
+        }
+        public AddCategory(IUoW uow)
         {
             InitializeComponent();
             this.uow = uow;
@@ -41,12 +47,17 @@ namespace FinancingManager
                     MessageBox.Show("A category with that name already exists!");
                     return;
                 }
-
                 // додавання її в базу для подальшого виведення в список категорій
                 int lastCategoryId = uow.CategoryRepo.Get().Select(x => x.Id).Last();
                 int lastAccountId = uow.AcountRepo.Get().Select(x => x.Id).Last();
                 int lastLimitId = uow.LimitRepo.Get().Select(x => x.Id).Last();
-                uow.CategoryRepo.Insert(new Category { Name = NewName, Summ = 0, AcountId = lastAccountId, LimitId = lastLimitId});
+
+                var prop = comboBox1.SelectedItem as PropertyInfo;
+                var origColor = (Color)ColorConverter.ConvertFromString(prop.Name);
+                System.Drawing.Color color= System.Drawing.Color.FromArgb(origColor.A, origColor.R, origColor.G, origColor.B);
+                
+                Category = new Category { Name = NewName, Summ = 500, AcountId = lastAccountId, LimitId = lastLimitId, Color = color };
+                uow.CategoryRepo.Insert(Category);
             }
             catch(Exception ex)
             {
@@ -61,6 +72,11 @@ namespace FinancingManager
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ComboBoxColors_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+         
         }
     }
 }

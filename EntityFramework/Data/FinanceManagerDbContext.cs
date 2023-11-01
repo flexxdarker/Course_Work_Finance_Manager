@@ -42,14 +42,14 @@ namespace EntityFramework.Data
 
             modelBuilder.Entity<Category>().HasData(new[]
             { 
-                new Category() { Id = 1, Name = "Food",Color = Color.SlateGray, Summ = 0, AcountId = 1, LimitId = 1},           
-                new Category() { Id = 2, Name = "Cafe", Color = Color.Orange,Summ = 0, AcountId = 1 , LimitId = 1},           
-                new Category() { Id = 3, Name = "Entertainment",Color = Color.AliceBlue, Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 4, Name = "Transport",Color = Color.Cornsilk, Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 5, Name = "Health",Color = Color.DarkGray, Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 6, Name = "Pet", Color = Color.SlateGray,Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 7, Name = "Family", Color = Color.Red, Summ = 0, AcountId = 1, LimitId = 1 },            
-                new Category() { Id = 8, Name = "Clothes",  Color = Color.Plum, Summ = 0, AcountId = 1, LimitId = 1 }            
+                new Category() { Id = 1, Name = "Food",Color = Color.PaleGreen, Summ = 0, AcountId = 1, LimitId = 1},           
+                new Category() { Id = 2, Name = "Cafe", Color = Color.PaleGoldenrod,Summ = 0, AcountId = 1 , LimitId = 1},           
+                new Category() { Id = 3, Name = "Entertainment",Color = Color.IndianRed, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 4, Name = "Transport",Color = Color.PaleTurquoise, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 5, Name = "Health",Color = Color.LightSeaGreen, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 6, Name = "Pet", Color = Color.Aquamarine,Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 7, Name = "Family", Color = Color.PaleVioletRed, Summ = 0, AcountId = 1, LimitId = 1 },            
+                new Category() { Id = 8, Name = "Clothes",  Color = Color.LightSlateGray, Summ = 0, AcountId = 1, LimitId = 1 }            
             });
 
             modelBuilder.Entity<Cost>().HasData(new[]

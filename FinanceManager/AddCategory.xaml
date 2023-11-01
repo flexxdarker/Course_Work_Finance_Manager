@@ -3,18 +3,34 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:FinancingManager"
         mc:Ignorable="d"
         Title="AddCategory" Height="300" Width="500">
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetType" 
+    ObjectType="{x:Type sys:Type}" x:Key="colorsTypeOdp">
+            <ObjectDataProvider.MethodParameters>
+                <sys:String>System.Windows.Media.Colors, PresentationCore,
+            Version=3.0.0.0, Culture=neutral, 
+            PublicKeyToken=31bf3856ad364e35</sys:String>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider ObjectInstance="{StaticResource colorsTypeOdp}"  
+    MethodName="GetProperties" x:Key="colorPropertiesOdp">
+        </ObjectDataProvider>
+    </Window.Resources>
     <DockPanel Background="Black">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -29,8 +45,10 @@
             <Label Grid.Row="1" Style="{StaticResource LabelStyle}">Enter category name :</Label>
             <TextBox x:Name="CategoryTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyle}"></TextBox>
 
-            <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="SaveCategory_Click">Save changes</Button>
-            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="Cancel_Click">Cancel</Button>
+            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="SaveCategory_Click">Save changes</Button>
+            <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="Cancel_Click">Cancel</Button>
+            <ComboBox Name="comboBox1" Grid.Column="1" Grid.Row="2" Width="140" Height="40" ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" DisplayMemberPath="Name" SelectedValuePath="Name" />
+   
         </Grid>
     </DockPanel>
 </Window>

@@ -29,7 +29,7 @@
                 <Label Style="{StaticResource LabelStyle}">$</Label>
                 <Button Style="{StaticResource ButtonlStyle}" Click="ChangeLimit_Click">Change limit</Button>
                 <Button Style="{StaticResource ButtonlStyle}" Click="AddCategory_Click">Add category</Button>
-                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black">
+                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
                     <Button Style="{StaticResource ButtonlStyle}" Click="SortByName">Sort by Name</Button>
                     <Button Style="{StaticResource ButtonlStyle}" Click="SortByMoney">Sort by Money</Button>
                     <Button Style="{StaticResource ButtonlStyle}" Click="SortByPercents">Sort by Percents</Button>

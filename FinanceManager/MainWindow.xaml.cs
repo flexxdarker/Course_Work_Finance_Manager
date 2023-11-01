@@ -36,27 +36,29 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            Random r = new Random();
-           // Color randomColor = (Color)random.Next(Enum.GetNames(typeof(Color)).Length);
- 
-            //var c = (System.Windows.Media.Color)Enum.ToObject(typeof(System.Windows.Media.Color), random.Next(Enum.GetNames(typeof(System.Windows.Media.Color)).Length));
-
-            foreach (var item in uow.CategoryRepo.Get())
-            {
-               Diagram.Series.Add(new PieSeries { 
+           void AddDiagram(Category item)
+           {   
+            
+                Diagram.Series.Add(new PieSeries { 
                    
                    Title= item.Name,
-                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)) /*new SolidColorBrush(Color.FromRgb((byte)r.Next(1, 255), (byte)r.Next(1, 255), (byte)r.Next(1, 233)))*/, 
+                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
                    StrokeThickness = 0,
                    Values = new ChartValues<double> 
                    { 
                        (Convert.ToDouble((item.Summ / 100)))
                    }
                });
+           }
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            Random r = new Random();
+      
+            foreach (var item in uow.CategoryRepo.Get())
+            {
+                AddDiagram(item);
             }
        
 
@@ -93,18 +95,12 @@ namespace FinanceManager
         {
             changeLimitWindow = new ChangeLimitWindow();
             changeLimitWindow.ShowDialog();
-            // витягання з бази останнього елементу з таблиці лімітів
-        }
-
-        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            // запуск вікна з виведенням покупок по категорії
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
             
-            addCategory = new AddCategory(ref uow);
+            addCategory = new AddCategory(uow);
             addCategory.ShowDialog();
 
             try
@@ -123,6 +119,8 @@ namespace FinanceManager
 
                 //
                 PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
+
+                AddDiagram(lastCategory);
             }
             catch (Exception ex)
             {
@@ -179,6 +177,16 @@ namespace FinanceManager
 
             ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
             showDetails.ShowDialog();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
