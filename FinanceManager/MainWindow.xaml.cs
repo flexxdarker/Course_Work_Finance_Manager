@@ -4,7 +4,9 @@ using FinancingManager;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,8 +28,11 @@ namespace FinanceManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+    
     public partial class MainWindow : Window
     {
+        ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
+
         private IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
@@ -54,29 +59,30 @@ namespace FinanceManager
             }
 
             FillListBoxes();
+            ItemSource();
         }
+        private void ItemSource()
+        {
+
+            CategoriesListBox.ItemsSource = categories;
+            MoneyListBox.ItemsSource = categories;
+            PercentsListBox.ItemsSource = categories;
+        }
+
         private void FillListBoxes()
         {
             PercentsListBox.Items.Clear();
             CategoriesListBox.Items.Clear();
             MoneyListBox.Items.Clear();
-            var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name);
-            var Money = uow.CategoryRepo.Get().Select(x => x.Summ);
-            //CategoriesListBox.ItemsSource = CategoryNames;
-            //MoneyListBox.ItemsSource = Money;
-            foreach (var category in CategoryNames)
+            var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name).ToList();
+            var Money = uow.CategoryRepo.Get().Select(x => x.Summ).ToList();
+
+            var Categories = uow.CategoryRepo.Get().ToList();
+            for (int i = 0; i < CategoryNames.Count(); i++)
             {
-                CategoriesListBox.Items.Add(category.ToString());
+                categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit ));
             }
-            foreach (var money in Money)
-            {
-                MoneyListBox.Items.Add(money.ToString());
-            }
-            var Categories = uow.CategoryRepo.Get();
-            foreach (var item in Categories)
-            {
-                PercentsListBox.Items.Add($"{(item.Summ * 100) / limit} %");
-            }
+            
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
@@ -119,13 +125,11 @@ namespace FinanceManager
                 //виведення її в список категорій
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
                 CategoriesListBox.Items.Add(lastCategory.Name);
-                //MoneyListBox.Items.Add(lastCategory.Summ);
+                
 
                 string summ = (lastCategory.Summ % 1 == 0) ? ($"{lastCategory.Summ}.00") : (lastCategory.Summ.ToString());
                 MoneyListBox.Items.Add(summ);
-                //number % 1 == 0
-
-                //
+                
                 PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
             }
             catch (Exception ex)
@@ -151,32 +155,22 @@ namespace FinanceManager
 
 		}
 
-        private void Sort(ListBox listBox ) 
-        {
-            List<string> list = new List<string>();
-            foreach (var item in listBox.Items)
-            {
-                list.Add((string)item);
-            }
-            listBox.Items.Clear();
-            list.Sort();
-            listBox.ItemsSource = list;
-        }
         private void SortByName(object sender, RoutedEventArgs e)
-        {
-            Sort(CategoriesListBox);
+        {       
+            categories = new (categories.OrderBy(x => x.Name));
+            ItemSource();
         }
 
         private void SortByMoney(object sender, RoutedEventArgs e)
         {
-            Sort(MoneyListBox);
+            categories = new(categories.OrderBy(x => x.Summ));
+            ItemSource();
         }
 
         private void SortByPercents(object sender, RoutedEventArgs e)
         {
-            Sort(PercentsListBox);
+            categories = new(categories.OrderBy(x => x.Persent));
+            ItemSource();
         }
-
-
     }
 }

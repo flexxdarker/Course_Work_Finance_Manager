@@ -49,7 +49,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Categoies(Names):</Label>
-                <ListBox x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}" MouseDoubleClick="ShowExpenses_DoubleClick"></ListBox>
+                <ListBox DisplayMemberPath="Name" x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}" MouseDoubleClick="ShowExpenses_DoubleClick"></ListBox>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
@@ -63,10 +63,10 @@
                 </Grid.RowDefinitions>
 
                 <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Money($):</Label>
-                <ListBox x:Name="MoneyListBox" Grid.Row="1" Grid.Column="0" Style="{StaticResource ListBoxStyle}"></ListBox>
+                <ListBox DisplayMemberPath="Summ" x:Name="MoneyListBox" Grid.Row="1" Grid.Column="0" Style="{StaticResource ListBoxStyle}"></ListBox>
 
                 <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Percents(%):</Label>
-                <ListBox x:Name="PercentsListBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource ListBoxStyle}"></ListBox>
+                <ListBox DisplayMemberPath="Persent" x:Name="PercentsListBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource ListBoxStyle}"></ListBox>
 
             </Grid>
 
