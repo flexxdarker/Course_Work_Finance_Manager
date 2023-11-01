@@ -68,6 +68,7 @@ namespace FinancingManager
         private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
 			UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
+			listBox.Items.RemoveAt(listBox.SelectedIndex);
 			UoW.Save();
 		}
     }
