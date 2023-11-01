@@ -28,7 +28,7 @@ namespace FinanceManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    
+
     public partial class MainWindow : Window
     {
         ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
@@ -38,26 +38,16 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit;
-        
+
         public MainWindow()
         {
             InitializeComponent();
-            Diagram.Series.Add(new PieSeries { Title= "la",Fill=Brushes.LightGray, StrokeThickness = 0,Values = new ChartValues<double> {20.0} });
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.LightGray, StrokeThickness = 0, Values = new ChartValues<double> { 20.0 } });
             Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
             Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
 
-
-            limit = defaultLimit;
-            var limits = uow.LimitRepo.Get();
-            if (limits.Count() == 0)
-                LimitLabel.Content = defaultLimit;
-            else
-            {
-                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
-                LimitLabel.Content = limit;
-            }
-
+            SetLimit();
             FillListBoxes();
             ItemSource();
         }
@@ -68,21 +58,30 @@ namespace FinanceManager
             MoneyListBox.ItemsSource = categories;
             PercentsListBox.ItemsSource = categories;
         }
-
+        private void SetLimit()
+        {
+            limit = defaultLimit;
+            var limits = uow.LimitRepo.Get();
+            if (limits.Count() == 0)
+                LimitLabel.Content = defaultLimit;
+            else
+            {
+                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                LimitLabel.Content = limit;
+            }
+        }
         private void FillListBoxes()
         {
-            PercentsListBox.Items.Clear();
-            CategoriesListBox.Items.Clear();
-            MoneyListBox.Items.Clear();
+            categories.Clear();
+            ItemSource();
             var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name).ToList();
             var Money = uow.CategoryRepo.Get().Select(x => x.Summ).ToList();
 
             var Categories = uow.CategoryRepo.Get().ToList();
             for (int i = 0; i < CategoryNames.Count(); i++)
             {
-                categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit ));
+                categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit));
             }
-            
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
@@ -113,7 +112,6 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            
             addCategory = new AddCategory(ref uow);
             addCategory.ShowDialog();
 
@@ -124,13 +122,9 @@ namespace FinanceManager
 
                 //виведення її в список категорій
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
-                CategoriesListBox.Items.Add(lastCategory.Name);
-                
 
-                string summ = (lastCategory.Summ % 1 == 0) ? ($"{lastCategory.Summ}.00") : (lastCategory.Summ.ToString());
-                MoneyListBox.Items.Add(summ);
-                
-                PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
+                categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                ItemSource();
             }
             catch (Exception ex)
             {
@@ -150,14 +144,14 @@ namespace FinanceManager
 
         }
 
-		private void Diagram_Loaded(object sender, RoutedEventArgs e)
-		{
+        private void Diagram_Loaded(object sender, RoutedEventArgs e)
+        {
 
-		}
+        }
 
         private void SortByName(object sender, RoutedEventArgs e)
-        {       
-            categories = new (categories.OrderBy(x => x.Name));
+        {
+            categories = new(categories.OrderBy(x => x.Name));
             ItemSource();
         }
 
@@ -173,10 +167,40 @@ namespace FinanceManager
             ItemSource();
         }
 
-		private void AddCost_Click(object sender, RoutedEventArgs e)
-		{
+
+        private void DeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+            int RemoveIdList = 0;
+            if (CategoriesListBox.SelectedItem != null)
+                RemoveIdList = CategoriesListBox.SelectedIndex;
+            else if (MoneyListBox.SelectedItem != null)
+                RemoveIdList = MoneyListBox.SelectedIndex;
+            else if (PercentsListBox.SelectedItem != null)
+                RemoveIdList = PercentsListBox.SelectedIndex;
+            else
+            { MessageBox.Show("Select a category to delete!"); return; }
+
+            CategoryView selectedCategory = (CategoryView)CategoriesListBox.SelectedItem;
+
+            categories.RemoveAt(RemoveIdList);
+            ItemSource();
+
+            Category? SelectedCategory = uow.CategoryRepo.Get().FirstOrDefault(x => x.Name == selectedCategory.Name);
+            var Costs = uow.CostRepo.Get().Where(x => x.CategoryId == SelectedCategory.Id);
+            foreach (var cost in Costs)
+            {
+                uow.CostRepo.Delete(cost.Id);
+            }
+            uow.CategoryRepo.Delete(SelectedCategory.Id);
+            uow.Save();
+        }
+    
+
+        private void AddCost_Click(object sender, RoutedEventArgs e)
+		    {
             AddCosts addcost = new AddCosts();
             addcost.ShowDialog();
-		}
-	}
+	    	}
+	  }
 }
+

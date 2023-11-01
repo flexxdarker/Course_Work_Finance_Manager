@@ -15,8 +15,8 @@ namespace FinancingManager
         public CategoryView(string name, decimal summ, decimal persent)
         {
             Name = name;
-            Summ = summ;
-            Persent = persent;
+            Summ = Math.Round(summ, 2);
+            Persent = Math.Round(persent, 2);
         }
     }
 }
