@@ -37,14 +37,14 @@ namespace FinancingManager
 		public ShowDetailsOfType()
         {
 			InitializeComponent();
-			category = "Clothes";
+			category = "Health";
 			FillListBox(category);
 		}
 
 		public ShowDetailsOfType(string? Category)
         {
             InitializeComponent();
-			category = Category ?? "Clothing";
+			category = Category ?? "Health";
 			FillListBox(category);
 		}
 
