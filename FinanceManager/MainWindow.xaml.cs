@@ -28,19 +28,7 @@ namespace FinanceManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    public class CategoryView
-    {
-        public string Name { get; set; }
-        public decimal Summ { get; set; }
-        public decimal Persent { get; set; }
-
-        public CategoryView(string name, decimal summ, decimal persent)
-        {
-            Name = name;
-            Summ = summ;
-            Persent = persent;
-        }
-    }
+    
     public partial class MainWindow : Window
     {
         ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
@@ -167,8 +155,6 @@ namespace FinanceManager
 
 		}
 
-        
-
         private void SortByName(object sender, RoutedEventArgs e)
         {       
             categories = new (categories.OrderBy(x => x.Name));
@@ -186,7 +172,5 @@ namespace FinanceManager
             categories = new(categories.OrderBy(x => x.Persent));
             ItemSource();
         }
-
-
     }
 }
