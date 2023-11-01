@@ -167,6 +167,7 @@ namespace FinanceManager
             ItemSource();
         }
 
+
         private void DeleteCategory_Click(object sender, RoutedEventArgs e)
         {
             int RemoveIdList = 0;
@@ -193,5 +194,13 @@ namespace FinanceManager
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
         }
-    }
+    
+
+        private void AddCost_Click(object sender, RoutedEventArgs e)
+		    {
+            AddCosts addcost = new AddCosts();
+            addcost.ShowDialog();
+	    	}
+	  }
 }
+

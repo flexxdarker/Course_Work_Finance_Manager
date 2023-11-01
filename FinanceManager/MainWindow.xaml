@@ -75,6 +75,7 @@
                 <Label Style="{StaticResource LabelStyle}">Money was spent:</Label>
                 <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyle}">0</Label>
                 <Label Style="{StaticResource LabelStyle}">$</Label>
+                <Button x:Name="AddCost" Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyle}" Margin="100,0,0,0"/>
             </ToolBar>
 
             <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>

@@ -19,8 +19,10 @@
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
             <ComboBox Grid.Row="1" Margin="0,10,0,10" Background="Black" BorderBrush="White" BorderThickness="2" >
-                <ComboBoxItem Name="byName" Content="Sort By Name" Selected="byName_Selected"/>
-                <ComboBoxItem Name="byPrice" Content="Sort By Price" Selected="byPrice_Selected"/>
+                <!--<ComboBoxItem Name="byName" Content="Sort By Name" Selected="byName_Selected"/>
+                <ComboBoxItem Name="byPrice" Content="Sort By Price" Selected="byPrice_Selected"/>-->
+                <Button x:Name="byNameBtn" Content="Sort by Name" Click="byNameBtn_Click" Style="{StaticResource ButtonlStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <Button x:Name="byPriceBtn" Content="Sort by Price" Click="byPriceBtn_Click" Style="{StaticResource ButtonlStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
             </ComboBox>
             <ListBox Background="Black" BorderBrush="White" BorderThickness="2" FontSize="20" Foreground="White" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Name="listBox">
                  <ListBoxItem Background="Black" BorderBrush="White" />
