@@ -172,5 +172,11 @@ namespace FinanceManager
             categories = new(categories.OrderBy(x => x.Persent));
             ItemSource();
         }
-    }
+
+		private void AddCost_Click(object sender, RoutedEventArgs e)
+		{
+            AddCosts addcost = new AddCosts();
+            addcost.ShowDialog();
+		}
+	}
 }
