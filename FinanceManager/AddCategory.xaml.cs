@@ -65,12 +65,15 @@ namespace FinancingManager
             }
 
             CategoryTextBox.Text = string.Empty;
+
+            this.DialogResult = true;
             uow.Save();
             this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
 

@@ -24,14 +24,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
- 
-
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
     public partial class MainWindow : Window
     {
         ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
@@ -65,7 +61,6 @@ namespace FinanceManager
             {
                 AddDiagram(item);
             }
-       
 
             SetLimit();
             FillListBoxes();
@@ -124,74 +119,67 @@ namespace FinanceManager
 
             uow.Save();
         }
-
         private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             // запуск вікна з виведенням покупок по категорії
         }
-
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            
             addCategory = new AddCategory(uow);
-            addCategory.ShowDialog();
-
-            try
+            if (addCategory.ShowDialog() == true)
             {
-                //витягання з бази доданої категорії 
-                var lastCategory = uow.CategoryRepo.Get().Last();
+                try
+                {
+                    //витягання з бази доданої категорії 
+                    var lastCategory = uow.CategoryRepo.Get().Last();
 
-                //виведення її в список категорій
-                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                    //виведення її в список категорій
+                    limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
-                //
-                categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
-                ItemSource();
+                    //
+                    categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                    ItemSource();
 
-                AddDiagram(lastCategory);
+                    AddDiagram(lastCategory);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                uow.Save();
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
 
-            uow.Save();
         }
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
         private void Diagram_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void SortByName(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Name));
             ItemSource();
         }
-
         private void SortByMoney(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Summ));
             ItemSource();
         }
-
         private void SortByPercents(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Persent));
             ItemSource();
         }
-
-
         private void DeleteCategory_Click(object sender, RoutedEventArgs e)
         {
             int RemoveIdList = 0;
@@ -218,23 +206,15 @@ namespace FinanceManager
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
         }
-
-   
-
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-       
-
         private void AddCost_Click(object sender, RoutedEventArgs e)
-		    {
+		{
             AddCosts addcost = new AddCosts();
             addcost.ShowDialog();
-	    	}
-
+	    }
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
              string selectedObject = CategoriesListBox.SelectedItem.ToString();
@@ -245,4 +225,3 @@ namespace FinanceManager
         }
     }
 }
-
