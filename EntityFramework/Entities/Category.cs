@@ -20,5 +20,9 @@ namespace EntityFramework.Entities
         public virtual Acount Acount { get; set; }
         public int LimitId { get; set; }
         public virtual Limit Limit { get; set; }
-    }
+		public override string ToString()
+		{
+            return this.Name;
+		}
+	}
 }

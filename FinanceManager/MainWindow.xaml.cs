@@ -4,7 +4,9 @@ using FinancingManager;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +31,11 @@ namespace FinanceManager
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+
     public partial class MainWindow : Window
     {
+        ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
+
         private IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
@@ -61,7 +66,24 @@ namespace FinanceManager
                 AddDiagram(item);
             }
        
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.LightGray, StrokeThickness = 0, Values = new ChartValues<double> { 20.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
+            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
 
+            SetLimit();
+            FillListBoxes();
+            ItemSource();
+        }
+        private void ItemSource()
+        {
+
+            CategoriesListBox.ItemsSource = categories;
+            MoneyListBox.ItemsSource = categories;
+            PercentsListBox.ItemsSource = categories;
+        }
+        private void SetLimit()
+        {
             limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
             if (limits.Count() == 0)
@@ -71,30 +93,45 @@ namespace FinanceManager
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
                 LimitLabel.Content = limit;
             }
+        }
+        private void FillListBoxes()
+        {
+            categories.Clear();
+            ItemSource();
+            var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name).ToList();
+            var Money = uow.CategoryRepo.Get().Select(x => x.Summ).ToList();
 
-            var CategoryNames = uow.CategoryRepo.Get().Select(x => x.Name);
-            var Money = uow.CategoryRepo.Get().Select(x => x.Summ);
-            //CategoriesListBox.ItemsSource = CategoryNames;
-            //MoneyListBox.ItemsSource = Money;
-            foreach (var category in CategoryNames)
+            var Categories = uow.CategoryRepo.Get().ToList();
+            for (int i = 0; i < CategoryNames.Count(); i++)
             {
-                CategoriesListBox.Items.Add(category.ToString());
-            }
-            foreach (var money in Money)
-            {
-                MoneyListBox.Items.Add(money.ToString());
-            }
-            var Categories = uow.CategoryRepo.Get();
-            foreach (var item in Categories)
-            {
-                PercentsListBox.Items.Add($"{(item.Summ * 100) / limit} %");
+                categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit));
             }
         }
-        
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
-            changeLimitWindow = new ChangeLimitWindow();
+            changeLimitWindow = new ChangeLimitWindow(ref uow);
             changeLimitWindow.ShowDialog();
+
+            // витягання з бази останнього елементу з таблиці лімітів
+            try
+            {
+                var lastLimit = uow.LimitRepo.Get().Last();
+                limit = lastLimit.Value;
+                LimitLabel.Content = limit;
+
+                FillListBoxes();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            uow.Save();
+        }
+
+        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // запуск вікна з виведенням покупок по категорії
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -110,15 +147,9 @@ namespace FinanceManager
 
                 //виведення її в список категорій
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
-                CategoriesListBox.Items.Add(lastCategory.Name);
-                //MoneyListBox.Items.Add(lastCategory.Summ);
 
-                string summ = (lastCategory.Summ % 1 == 0) ? ($"{lastCategory.Summ}.00") : (lastCategory.Summ.ToString());
-                MoneyListBox.Items.Add(summ);
-                //number % 1 == 0
-
-                //
-                PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
+                categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                ItemSource();
 
                 AddDiagram(lastCategory);
             }
@@ -140,35 +171,55 @@ namespace FinanceManager
             this.Close();
         }
 
-		private void Diagram_Loaded(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-        private void Sort(ListBox listBox ) 
+        private void Diagram_Loaded(object sender, RoutedEventArgs e)
         {
-            List<string> list = new List<string>();
-            foreach (var item in listBox.Items)
-            {
-                list.Add((string)item);
-            }
-            listBox.Items.Clear();
-            list.Sort();
-            listBox.ItemsSource = list;
+
         }
+
         private void SortByName(object sender, RoutedEventArgs e)
         {
-            Sort(CategoriesListBox);
+            categories = new(categories.OrderBy(x => x.Name));
+            ItemSource();
         }
 
         private void SortByMoney(object sender, RoutedEventArgs e)
         {
-            Sort(MoneyListBox);
+            categories = new(categories.OrderBy(x => x.Summ));
+            ItemSource();
         }
 
         private void SortByPercents(object sender, RoutedEventArgs e)
         {
-            Sort(PercentsListBox);
+            categories = new(categories.OrderBy(x => x.Persent));
+            ItemSource();
+        }
+
+
+        private void DeleteCategory_Click(object sender, RoutedEventArgs e)
+        {
+            int RemoveIdList = 0;
+            if (CategoriesListBox.SelectedItem != null)
+                RemoveIdList = CategoriesListBox.SelectedIndex;
+            else if (MoneyListBox.SelectedItem != null)
+                RemoveIdList = MoneyListBox.SelectedIndex;
+            else if (PercentsListBox.SelectedItem != null)
+                RemoveIdList = PercentsListBox.SelectedIndex;
+            else
+            { MessageBox.Show("Select a category to delete!"); return; }
+
+            CategoryView selectedCategory = (CategoryView)CategoriesListBox.SelectedItem;
+
+            categories.RemoveAt(RemoveIdList);
+            ItemSource();
+
+            Category? SelectedCategory = uow.CategoryRepo.Get().FirstOrDefault(x => x.Name == selectedCategory.Name);
+            var Costs = uow.CostRepo.Get().Where(x => x.CategoryId == SelectedCategory.Id);
+            foreach (var cost in Costs)
+            {
+                uow.CostRepo.Delete(cost.Id);
+            }
+            uow.CategoryRepo.Delete(SelectedCategory.Id);
+            uow.Save();
         }
 
         private void CategoriesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -187,6 +238,11 @@ namespace FinanceManager
         private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
         {
 
-        }
-    }
+        private void AddCost_Click(object sender, RoutedEventArgs e)
+		    {
+            AddCosts addcost = new AddCosts();
+            addcost.ShowDialog();
+	    	}
+	  }
 }
+
