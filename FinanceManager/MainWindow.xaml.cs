@@ -82,6 +82,7 @@ namespace FinanceManager
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
                 LimitLabel.Content = limit;
             }
+
         }
         private void FillListBoxes()
         {
