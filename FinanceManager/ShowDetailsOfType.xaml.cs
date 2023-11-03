@@ -48,27 +48,46 @@ namespace FinancingManager
 			FillListBox(category);
 		}
 
-		private void byPrice_Selected(object sender, RoutedEventArgs e)
-        {
-            listBox.Items.Clear();
-            foreach(var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category).OrderBy(x=>x.Price))
-            {
-                listBox.Items.Add(item);
-            }
-        }
+		//private void byPrice_Selected(object sender, RoutedEventArgs e)
+  //      {
+  //          listBox.Items.Clear();
+  //          foreach(var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category).OrderBy(x=>x.Price))
+  //          {
+  //              listBox.Items.Add(item);
+  //          }
+  //      }
 
-        private void byName_Selected(object sender, RoutedEventArgs e)
+  //      private void byName_Selected(object sender, RoutedEventArgs e)
+  //      {
+		//	listBox.Items.Clear();
+		//	foreach (var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category).OrderBy(x => x.Name))
+		//	{
+		//		listBox.Items.Add(item);
+		//	}
+		//}
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
         {
+			UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
+			listBox.Items.RemoveAt(listBox.SelectedIndex);
+			UoW.Save();
+		}
+
+		private void byNameBtn_Click(object sender, RoutedEventArgs e)
+		{
 			listBox.Items.Clear();
 			foreach (var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category).OrderBy(x => x.Name))
 			{
 				listBox.Items.Add(item);
 			}
 		}
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-			UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
-			UoW.Save();
+
+		private void byPriceBtn_Click(object sender, RoutedEventArgs e)
+		{
+			listBox.Items.Clear();
+			foreach (var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category).OrderBy(x => x.Price))
+			{
+				listBox.Items.Add(item);
+			}
 		}
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

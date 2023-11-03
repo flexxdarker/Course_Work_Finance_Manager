@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EntityFramework.Entities;
+using EntityFramework.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,23 +23,36 @@ namespace FinancingManager
     {
         int NewLimit = 0;
         const int MaxLimit = 100_000;
-        public ChangeLimitWindow()
+        private IUoW uow;
+
+        public ChangeLimitWindow(ref IUoW uow)
         {
             InitializeComponent();
+            this.uow = uow;
         }
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
+            // запис нового ліміта в базу щоб потім змінювати ліміт в мейн віндов
+
             if(!int.TryParse(LimitTextBox.Text, out NewLimit))
             { 
                 MessageBox.Show($"The 'limit' field must contain only a numeric value without text or special characters! And limit cannot be greater than {MaxLimit}");
                 LimitTextBox.Text = string.Empty;
                 return;
             }
-            // запис нового ліміта в базу щоб потім змінювати ліміт в мейн віндов
 
-
+            try
+            {        
+                // додавання її в базу для подальшого виведення в список категорій
+                uow.LimitRepo.Insert(new Limit { Value = NewLimit });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             LimitTextBox.Text = string.Empty;
+            uow.Save();
             this.Close();
         }
 
