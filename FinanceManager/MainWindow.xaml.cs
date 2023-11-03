@@ -31,13 +31,12 @@ namespace FinanceManager
     public partial class MainWindow : Window
     {
         ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
-
-        private IUoW uow = new UnitOfWork();
+        IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
-           void AddDiagram(Category item)
+        void AddDiagram(Category item)
            {   
             
                 Diagram.Series.Add(new PieSeries { 

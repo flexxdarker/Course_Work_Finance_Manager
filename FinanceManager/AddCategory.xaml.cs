@@ -23,12 +23,11 @@ namespace FinancingManager
     /// </summary>
     public partial class AddCategory : Window
     {
-        private IUoW uow;
-        public Category Category {get; set; }
+        private IUoW? uow;
+        public Category? Category {get; set; }
         public AddCategory()
         {
             InitializeComponent();
-           
         }
         public AddCategory(IUoW uow)
         {
@@ -66,8 +65,8 @@ namespace FinancingManager
 
             CategoryTextBox.Text = string.Empty;
 
-            this.DialogResult = true;
             uow.Save();
+            this.DialogResult = true;
             this.Close();
         }
 
