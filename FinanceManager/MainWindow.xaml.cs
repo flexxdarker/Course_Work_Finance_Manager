@@ -237,9 +237,9 @@ namespace FinanceManager
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             string selectedObject = CategoriesListBox.SelectedItem.ToString();
+             var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name);
             showDetails.ShowDialog();
         
         }
