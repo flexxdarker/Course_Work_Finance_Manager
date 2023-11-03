@@ -73,7 +73,6 @@ namespace FinanceManager
         }
         private void ItemSource()
         {
-
             CategoriesListBox.ItemsSource = categories;
             MoneyListBox.ItemsSource = categories;
             PercentsListBox.ItemsSource = categories;
