@@ -54,7 +54,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Categoies(Names):</Label>
-                <ListBox DisplayMemberPath="Name" x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}" MouseDoubleClick="ShowExpenses_DoubleClick"></ListBox>
+                <ListBox DisplayMemberPath="Name" MouseDoubleClick="CategoriesListBox_MouseDoubleClick" x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}"  Grid.ColumnSpan="2"></ListBox>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">

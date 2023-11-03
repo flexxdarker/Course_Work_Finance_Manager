@@ -219,27 +219,30 @@ namespace FinanceManager
             uow.Save();
         }
 
-        private void CategoriesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string selectedObject = CategoriesListBox.SelectedItem.ToString();
+   
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
-            showDetails.ShowDialog();
-        }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
-        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
+       
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
 		    {
             AddCosts addcost = new AddCosts();
             addcost.ShowDialog();
 	    	}
-	  }
+
+        private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+             string selectedObject = CategoriesListBox.SelectedItem.ToString();
+
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
+            showDetails.ShowDialog();
+        
+        }
+    }
 }
 
