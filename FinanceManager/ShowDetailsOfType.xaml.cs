@@ -89,5 +89,10 @@ namespace FinancingManager
 				listBox.Items.Add(item);
 			}
 		}
-	}
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
 }

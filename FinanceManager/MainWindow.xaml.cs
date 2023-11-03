@@ -24,6 +24,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
+ 
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -37,15 +40,32 @@ namespace FinanceManager
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
-        decimal limit;
-
+        decimal limit = 1;
+           void AddDiagram(Category item)
+           {   
+            
+                Diagram.Series.Add(new PieSeries { 
+                   
+                   Title= item.Name,
+                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
+                   StrokeThickness = 0,
+                   Values = new ChartValues<double> 
+                   { 
+                       (Convert.ToDouble((item.Summ / 100)))
+                   }
+               });
+           }
         public MainWindow()
         {
             InitializeComponent();
-            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.LightGray, StrokeThickness = 0, Values = new ChartValues<double> { 20.0 } });
-            Diagram.Series.Add(new PieSeries { Title = "aasd", Fill = Brushes.DarkGray, StrokeThickness = 0, Values = new ChartValues<double> { 30.0 } });
-            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.Gray, StrokeThickness = 0, Values = new ChartValues<double> { 10.0 } });
-            Diagram.Series.Add(new PieSeries { Title = "la", Fill = Brushes.White, StrokeThickness = 0, Values = new ChartValues<double> { 40.0 } });
+
+            Random r = new Random();
+      
+            foreach (var item in uow.CategoryRepo.Get())
+            {
+                AddDiagram(item);
+            }
+       
 
             SetLimit();
             FillListBoxes();
@@ -112,7 +132,8 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory(ref uow);
+            
+            addCategory = new AddCategory(uow);
             addCategory.ShowDialog();
 
             try
@@ -123,8 +144,11 @@ namespace FinanceManager
                 //виведення її в список категорій
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
+                //
                 categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
                 ItemSource();
+
+                AddDiagram(lastCategory);
             }
             catch (Exception ex)
             {
@@ -141,7 +165,7 @@ namespace FinanceManager
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         private void Diagram_Loaded(object sender, RoutedEventArgs e)
@@ -194,13 +218,31 @@ namespace FinanceManager
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
         }
-    
+
+   
+
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+       
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
 		    {
             AddCosts addcost = new AddCosts();
             addcost.ShowDialog();
 	    	}
-	  }
+
+        private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+             string selectedObject = CategoriesListBox.SelectedItem.ToString();
+
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject);
+            showDetails.ShowDialog();
+        
+        }
+    }
 }
 
