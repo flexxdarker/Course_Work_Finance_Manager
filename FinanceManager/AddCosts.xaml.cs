@@ -22,6 +22,8 @@ namespace FinancingManager
     public partial class AddCosts : Window
     {
         UnitOfWork UoW = new UnitOfWork();
+        public int currentCategotyId = 0;
+        public string currentCategoryName = string.Empty;
         private void FillComboBox()
         {
             foreach(var item in UoW.CategoryRepo.Get())
@@ -44,10 +46,20 @@ namespace FinancingManager
                 Price = Convert.ToDecimal(PriceTb.Text),
             });
             UoW.Save();
+            var lastCost = UoW.CostRepo.Get().Last();
+            currentCategotyId = lastCost.CategoryId;
+            var currentCategory = UoW.CategoryRepo.Get().Where(X => X.Id == lastCost.CategoryId).Last();
+            currentCategoryName = currentCategory.Name;
+            currentCategory.Summ += lastCost.Price;
+            UoW.CategoryRepo.Update(currentCategory);
+            UoW.Save();
+            this.DialogResult = true;
+            this.Close();
 		}
 
 		private void CancelBtn_Click(object sender, RoutedEventArgs e)
 		{
+            this.DialogResult = false;
             this.Close();
 		}
 	}

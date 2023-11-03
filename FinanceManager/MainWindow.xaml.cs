@@ -24,7 +24,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
- 
+
 
 
     /// <summary>
@@ -41,31 +41,32 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
-           void AddDiagram(Category item)
-           {   
-            
-                Diagram.Series.Add(new PieSeries { 
-                   
-                   Title= item.Name,
-                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
-                   StrokeThickness = 0,
-                   Values = new ChartValues<double> 
-                   { 
+        void AddDiagram(Category item)
+        {
+
+            Diagram.Series.Add(new PieSeries
+            {
+
+                Title = item.Name,
+                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R, item.Color.G, item.Color.B)),
+                StrokeThickness = 0,
+                Values = new ChartValues<double>
+                   {
                        (Convert.ToDouble((item.Summ / 100)))
                    }
-               });
-           }
+            });
+        }
         public MainWindow()
         {
             InitializeComponent();
 
             Random r = new Random();
-      
+
             foreach (var item in uow.CategoryRepo.Get())
             {
                 AddDiagram(item);
             }
-       
+
 
             SetLimit();
             FillListBoxes();
@@ -73,7 +74,6 @@ namespace FinanceManager
         }
         private void ItemSource()
         {
-
             CategoriesListBox.ItemsSource = categories;
             MoneyListBox.ItemsSource = categories;
             PercentsListBox.ItemsSource = categories;
@@ -132,7 +132,7 @@ namespace FinanceManager
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            
+
             addCategory = new AddCategory(uow);
             addCategory.ShowDialog();
 
@@ -219,7 +219,7 @@ namespace FinanceManager
             uow.Save();
         }
 
-   
+
 
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -227,21 +227,36 @@ namespace FinanceManager
 
         }
 
-       
+
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
-		    {
+        {
             AddCosts addcost = new AddCosts();
-            addcost.ShowDialog();
-	    	}
+            if (addcost.ShowDialog() == true)
+            {
+                var currentCategory = uow.CategoryRepo.Get().Where(x => x.Id == addcost.currentCategotyId).Last();
+                int id = 0;
+                foreach (var item in CategoriesListBox.Items)
+                {
+                    if (item == currentCategory.Name)
+                    {
+                        id = CategoriesListBox.Items.IndexOf(item);
+                    }
+                }
+                categories[id].Summ = currentCategory.Summ;
+                categories[id].Persent = currentCategory.Summ * 100 / limit;
+                ItemSource();
+                FillListBoxes();
+            }
+        }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
+            var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name);
+            ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name);
             showDetails.ShowDialog();
-        
+
         }
     }
 }
