@@ -44,6 +44,7 @@ namespace FinancingManager
                 Price = Convert.ToDecimal(PriceTb.Text),
             });
             UoW.Save();
+            this.Close();
 		}
 
 		private void CancelBtn_Click(object sender, RoutedEventArgs e)

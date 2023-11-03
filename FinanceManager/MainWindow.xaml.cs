@@ -217,12 +217,12 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
-        }
-
-   
+		}
 
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
@@ -230,10 +230,10 @@ namespace FinanceManager
        
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
-		    {
+		{
             AddCosts addcost = new AddCosts();
             addcost.ShowDialog();
-	    	}
+	    }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
