@@ -53,11 +53,13 @@ namespace FinancingManager
 
             LimitTextBox.Text = string.Empty;
             uow.Save();
+            this.DialogResult = true;
             this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = true;
             this.Close();
         }
 
