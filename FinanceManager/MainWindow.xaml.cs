@@ -67,6 +67,13 @@ namespace FinanceManager
             }
        
 
+            SetLimit();
+            FillListBoxes();
+            ItemSource();
+        }
+        private void ItemSource()
+        {
+
             CategoriesListBox.ItemsSource = categories;
             MoneyListBox.ItemsSource = categories;
             PercentsListBox.ItemsSource = categories;
@@ -138,7 +145,8 @@ namespace FinanceManager
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
                 //
-                PercentsListBox.Items.Add($"{(lastCategory.Summ * 100) / limit} %");
+                categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                ItemSource();
 
                 AddDiagram(lastCategory);
             }
