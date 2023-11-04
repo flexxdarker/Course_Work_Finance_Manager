@@ -203,10 +203,9 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
-		}
-
-
-
+            var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
+            Diagram.Series.Remove(pie);
+        }
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
