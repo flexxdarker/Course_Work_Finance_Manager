@@ -42,11 +42,11 @@
                 </Border.Background>
             </Border>-->
 
-            <Label Grid.Row="1" Style="{StaticResource LabelStyle}">Enter category name :</Label>
-            <TextBox x:Name="CategoryTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyle}"></TextBox>
+            <Label Grid.Row="1" Style="{StaticResource LabelStyleDark}">Enter category name :</Label>
+            <TextBox x:Name="CategoryTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyleDark}"></TextBox>
 
-            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="SaveCategory_Click">Save changes</Button>
-            <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="Cancel_Click">Cancel</Button>
+            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyleDark}" Width="140" Height="40" Click="SaveCategory_Click">Save changes</Button>
+            <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource ButtonlStyleDark}" Width="140" Height="40" Click="Cancel_Click">Cancel</Button>
             <ComboBox Name="comboBox1" Grid.Column="1" Grid.Row="2" Width="140" Height="40" ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}" DisplayMemberPath="Name" SelectedValuePath="Name" />
    
         </Grid>
