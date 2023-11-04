@@ -22,14 +22,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Content="Categories: "  VerticalAlignment="Center"/>
+            <Label Content="Categories: " Style="{StaticResource LabelStyleDark}" VerticalAlignment="Center"/>
             <ComboBox Name="categories" Grid.Column="1" Margin="5" BorderBrush="White" OpacityMask="Black" FontSize="17" Background="Black" Foreground="Black"/>
-            <Label Content="Name: "  Grid.Row="1" />
-            <TextBox x:Name="NameTb" Foreground="White" Background="Black" BorderBrush="White" Grid.Column="1" FontSize="17" Grid.Row="1" Margin="5"/>
-            <Label Content="Price: " Foreground="White" Background="Black" Grid.Row="2" FontSize="20"/>
-            <TextBox Name="PriceTb" Foreground="White" Background="Black" Grid.Row="2" Grid.Column="1" FontSize="17" BorderBrush="White" Margin="5"/>
-            <Button DockPanel.Dock="Top" Grid.Row="3" Grid.ColumnSpan="2" Name="AddCostBtn" Content="Add Cost" Background="Black" Foreground="White" BorderBrush="White" Click="AddCostBtn_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="140" Style="{StaticResource ButtonlStyle}"/>
-            <Button DockPanel.Dock="Top" Name="CancelBtn" Grid.Row="4" Grid.ColumnSpan="2" Content="Cancel" Background="Black" Foreground="White" BorderBrush="White" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource ButtonlStyle}" Width="140" Height="40" Click="CancelBtn_Click"/>
+            <Label Content="Name: " Style="{StaticResource LabelStyleDark}" Grid.Row="1"/>
+            <TextBox x:Name="NameTb" Style="{StaticResource TextBoxStyleDark}" Grid.Column="1"  Grid.Row="1" Margin="5"/>
+            <Label Content="Price: " Style="{StaticResource LabelStyleDark}" Grid.Row="2"/>
+            <TextBox Name="PriceTb" Style="{StaticResource TextBoxStyleDark}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+            <Button DockPanel.Dock="Top" Grid.Row="3" Grid.ColumnSpan="2" Name="AddCostBtn" Content="Add Cost" Click="AddCostBtn_Click" Height="40" Width="140" Style="{StaticResource ButtonlStyleDark}"/>
+            <Button DockPanel.Dock="Top" Name="CancelBtn" Grid.Row="4" Grid.ColumnSpan="2" Content="Cancel"  Style="{StaticResource ButtonlStyleDark}" Width="140" Height="40" Click="CancelBtn_Click"/>
         </Grid>
     </DockPanel>
 </Window>

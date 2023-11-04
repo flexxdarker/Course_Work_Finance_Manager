@@ -58,18 +58,46 @@
         <Setter Property="Margin" Value="10"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
-        <Setter Property="Background" Value="LightGray"></Setter>
+        <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
     </Style>
 
     <Style x:Key="TextBoxStyleLight" TargetType="{x:Type TextBox}">
         <Setter Property="Margin" Value="10"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
-        <Setter Property="Background" Value="DarkGray"></Setter>
+        <Setter Property="Background" Value="LightGray"></Setter>
         <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+    
+    <Style x:Key="PasswordBoxStyleLight" TargetType="{x:Type PasswordBox}">
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Background" Value="LightGray"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
     </Style>
 
+    <Style x:Key="PasswordBoxStyleDark" TargetType="{x:Type PasswordBox}">
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Background" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+    
     <Style x:Key="BorderStyleDark" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="CornerRadius" Value="7"></Setter>

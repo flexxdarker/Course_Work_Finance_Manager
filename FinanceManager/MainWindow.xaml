@@ -24,16 +24,16 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ToolBar Grid.Column="0" Grid.ColumnSpan="3" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
-                <Label Style="{StaticResource LabelStyle}">Current limit is</Label>
-                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyle}">0</Label>
-                <Label Style="{StaticResource LabelStyle}">$</Label>
-                <Button Style="{StaticResource ButtonlStyle}" Click="ChangeLimit_Click">Change limit</Button>
-                <Button Style="{StaticResource ButtonlStyle}" Click="AddCategory_Click">Add category</Button>
+            <ToolBar Grid.Column="0" Grid.ColumnSpan="3" Margin="80,0,0,0" Style="{StaticResource ToolBarStyleDark}">
+                <Label Style="{StaticResource LabelStyleDark}">Current limit is</Label>
+                <Label x:Name="LimitLabel" Style="{StaticResource LabelStyleDark}">0</Label>
+                <Label Style="{StaticResource LabelStyleDark}">$</Label>
+                <Button Style="{StaticResource ButtonlStyleDark}" Click="ChangeLimit_Click">Change limit</Button>
+                <Button Style="{StaticResource ButtonlStyleDark}" Click="AddCategory_Click">Add category</Button>
                 <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
-                    <Button Style="{StaticResource ButtonlStyle}" Click="SortByName">Sort by Name</Button>
-                    <Button Style="{StaticResource ButtonlStyle}" Click="SortByMoney">Sort by Money</Button>
-                    <Button Style="{StaticResource ButtonlStyle}" Click="SortByPercents">Sort by Percents</Button>
+                    <Button Style="{StaticResource ButtonlStyleDark}" Click="SortByName">Sort by Name</Button>
+                    <Button Style="{StaticResource ButtonlStyleDark}" Click="SortByMoney">Sort by Money</Button>
+                    <Button Style="{StaticResource ButtonlStyleDark}" Click="SortByPercents">Sort by Percents</Button>
                 </ComboBox>
             </ToolBar>
 
@@ -53,8 +53,8 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Categoies(Names):</Label>
-                <ListBox DisplayMemberPath="Name" MouseDoubleClick="CategoriesListBox_MouseDoubleClick" x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyle}"  Grid.ColumnSpan="2"></ListBox>
+                <Label Style="{StaticResource LabelStyleDark}" Margin="0,5,0,0">Categoies(Names):</Label>
+                <ListBox DisplayMemberPath="Name" MouseDoubleClick="CategoriesListBox_MouseDoubleClick" x:Name="CategoriesListBox" Grid.Row="1" Style="{StaticResource ListBoxStyleDark}"  Grid.ColumnSpan="2"></ListBox>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
@@ -67,29 +67,29 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-                <Label Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Money($):</Label>
-                <ListBox DisplayMemberPath="Summ" x:Name="MoneyListBox" Grid.Row="1" Grid.Column="0" Style="{StaticResource ListBoxStyle}"></ListBox>
+                <Label Style="{StaticResource LabelStyleDark}" Margin="0,5,0,0">Money($):</Label>
+                <ListBox DisplayMemberPath="Summ" x:Name="MoneyListBox" Grid.Row="1" Grid.Column="0" Style="{StaticResource ListBoxStyleDark}"></ListBox>
 
-                <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Margin="0,5,0,0">Percents(%):</Label>
-                <ListBox DisplayMemberPath="Persent" x:Name="PercentsListBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource ListBoxStyle}"></ListBox>
+                <Label Grid.Column="1" Style="{StaticResource LabelStyleDark}" Margin="0,5,0,0">Percents(%):</Label>
+                <ListBox DisplayMemberPath="Persent" x:Name="PercentsListBox" Grid.Row="1" Grid.Column="1" Style="{StaticResource ListBoxStyleDark}"></ListBox>
 
             </Grid>
 
-            <ToolBar Grid.Row="1" Grid.ColumnSpan="2" Margin="80,0,0,0" Style="{StaticResource ToolBarStyle}">
-                <Label Style="{StaticResource LabelStyle}">Money was spent:</Label>
-                <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyle}">0</Label>
-                <Label Style="{StaticResource LabelStyle}">$</Label>
-                <Button x:Name="AddCost" Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyle}" Margin="100,0,0,0"/>
+            <ToolBar Grid.Row="1" Grid.ColumnSpan="2" Margin="80,0,0,0" Style="{StaticResource ToolBarStyleDark}">
+                <Label Style="{StaticResource LabelStyleDark}">Money was spent:</Label>
+                <Label x:Name="MoneySpentLabel" Style="{StaticResource LabelStyleDark}">0</Label>
+                <Label Style="{StaticResource LabelStyleDark}">$</Label>
+                <Button x:Name="AddCost" Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyleDark}" Margin="100,0,0,0"/>
             </ToolBar>
 
-            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>
-            <Button Grid.Column="3" Style="{StaticResource ButtonlStyle}" HorizontalAlignment="Right" Click="Exit_Click" Width="60" Margin="0,0,5,0">Exit</Button>
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyleDark}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>
+            <Button Grid.Column="3" Style="{StaticResource ButtonlStyleDark}" HorizontalAlignment="Right" Click="Exit_Click" Width="60" Margin="0,0,5,0">Exit</Button>
 
             <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <lvc:PieChart x:Name="Diagram" StartingRotationAngle="0"  Margin="5,5,5,0" Loaded="Diagram_Loaded" Height="360"/>
             </StackPanel>
 
-            <Button Grid.Column="2" Grid.Row="3" Style="{StaticResource ButtonlStyle}" Margin="0" Width="240" Click="DeleteCategory_Click">Delete category</Button>
+            <Button Grid.Column="2" Grid.Row="3" Style="{StaticResource ButtonlStyleDark}" Margin="0" Width="240" Click="DeleteCategory_Click">Delete category</Button>
         </Grid>
     </DockPanel>
 </Window>
