@@ -36,6 +36,7 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
+        string theme;
         void AddDiagram(Category item)
            {   
             
@@ -67,20 +68,20 @@ namespace FinanceManager
         }
         private void ItemSource()
         {
-            CategoriesListBox.ItemsSource = categories;
-            MoneyListBox.ItemsSource = categories;
-            PercentsListBox.ItemsSource = categories;
+            categoriesListBox.ItemsSource = categories;
+            moneyListBox.ItemsSource = categories;
+            percentsListBox.ItemsSource = categories;
         }
         private void SetLimit()
         {
             limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
             if (limits.Count() == 0)
-                LimitLabel.Content = defaultLimit;
+                limitLabel.Content = defaultLimit;
             else
             {
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
-                LimitLabel.Content = limit;
+                limitLabel.Content = limit;
             }
         }
         private void FillListBoxes()
@@ -98,7 +99,7 @@ namespace FinanceManager
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
-            changeLimitWindow = new ChangeLimitWindow(ref uow);
+            changeLimitWindow = new ChangeLimitWindow(ref uow, theme);
             changeLimitWindow.ShowDialog();
 
             // витягання з бази останнього елементу з таблиці лімітів
@@ -106,7 +107,7 @@ namespace FinanceManager
             {
                 var lastLimit = uow.LimitRepo.Get().Last();
                 limit = lastLimit.Value;
-                LimitLabel.Content = limit;
+                limitLabel.Content = limit;
 
                 FillListBoxes();
             }
@@ -123,7 +124,7 @@ namespace FinanceManager
         }
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory(uow);
+            addCategory = new AddCategory(uow,theme);
             if (addCategory.ShowDialog() == true)
             {
                 try
@@ -181,16 +182,16 @@ namespace FinanceManager
         private void DeleteCategory_Click(object sender, RoutedEventArgs e)
         {
             int RemoveIdList = 0;
-            if (CategoriesListBox.SelectedItem != null)
-                RemoveIdList = CategoriesListBox.SelectedIndex;
-            else if (MoneyListBox.SelectedItem != null)
-                RemoveIdList = MoneyListBox.SelectedIndex;
-            else if (PercentsListBox.SelectedItem != null)
-                RemoveIdList = PercentsListBox.SelectedIndex;
+            if (categoriesListBox.SelectedItem != null)
+                RemoveIdList = categoriesListBox.SelectedIndex;
+            else if (moneyListBox.SelectedItem != null)
+                RemoveIdList = moneyListBox.SelectedIndex;
+            else if (percentsListBox.SelectedItem != null)
+                RemoveIdList = percentsListBox.SelectedIndex;
             else
             { MessageBox.Show("Select a category to delete!"); return; }
 
-            CategoryView selectedCategory = (CategoryView)CategoriesListBox.SelectedItem;
+            CategoryView selectedCategory = (CategoryView)categoriesListBox.SelectedItem;
 
             categories.RemoveAt(RemoveIdList);
             ItemSource();
@@ -214,17 +215,92 @@ namespace FinanceManager
         }
         private void AddCost_Click(object sender, RoutedEventArgs e)
 		{
-            AddCosts addcost = new AddCosts();
+            AddCosts addcost = new AddCosts(theme);
             addcost.ShowDialog();
 	    }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
+             var selectedObject = categoriesListBox.SelectedItem as CategoryView;
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name);
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
         
+        }
+
+        private void DarkThemeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            theme = "Dark";
+            Style darkLabel = (Style)FindResource("LabelStyleDark");
+            Style darkButton = (Style)FindResource("ButtonlStyleDark");
+            Style darkListBox = (Style)FindResource("ListBoxStyleDark");
+            Style darkToolBar = (Style)FindResource("ToolBarStyleDark");
+            Style darkDockPannel = (Style)FindResource("DockPannelStyleDark");
+            moneyLabel.Style = darkLabel;
+            moneySpentLabel.Style = darkLabel;
+            limitDollarLabel.Style = darkLabel;
+            dollarSpentLabel.Style = darkLabel;
+            categoryLabel.Style = darkLabel;
+            percentsLabel.Style = darkLabel;
+            limitLabel.Style = darkLabel;
+            currentLimitLabel.Style = darkLabel;
+            spentLabel.Style = darkLabel;
+            addCategoryBtn.Style = darkButton;
+            changeLimitBtn.Style = darkButton;
+            addCostBtn.Style = darkButton;
+            deleteCategoryBtn.Style = darkButton;
+            exitBtn.Style = darkButton;
+            lightThemeBtn.Style = darkButton;
+            darkThemeBtn.Style = darkButton;
+            limitHistoryBtn.Style = darkButton;
+            sortByNameBtn.Style = darkButton;
+            sortByMoneyBtn.Style = darkButton;
+            sortByPercentsBtn.Style = darkButton;
+            moneyListBox.Style = darkListBox;
+            percentsListBox.Style = darkListBox;
+            categoriesListBox.Style = darkListBox;
+            mainToolBar.Style = darkToolBar;
+            secondToolBar.Style = darkToolBar;
+            dockPannel.Style = darkDockPannel;
+            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollar.jpg"));
+        }
+
+        private void LightThemeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            theme = "Light";
+            Style lightLabel = (Style)FindResource("LabelStyleLight");
+            Style lightButton = (Style)FindResource("ButtonlStyleLight");
+            Style lightListBox = (Style)FindResource("ListBoxStyleLight");
+            Style lightToolBar = (Style)FindResource("ToolBarStyleLight");
+            Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
+            moneyLabel.Style = lightLabel;
+            moneySpentLabel.Style = lightLabel;
+            limitDollarLabel.Style = lightLabel;
+            dollarSpentLabel.Style = lightLabel;
+            categoryLabel.Style = lightLabel;
+            percentsLabel.Style = lightLabel;
+            limitLabel.Style = lightLabel;
+            currentLimitLabel.Style = lightLabel;
+            spentLabel.Style = lightLabel;
+            addCategoryBtn.Style = lightButton;
+            changeLimitBtn.Style = lightButton;
+            addCostBtn.Style = lightButton;
+            deleteCategoryBtn.Style = lightButton;
+            exitBtn.Style = lightButton;
+            lightThemeBtn.Style = lightButton;
+            darkThemeBtn.Style = lightButton;
+            limitHistoryBtn.Style = lightButton;
+            sortByNameBtn.Style = lightButton;
+            sortByMoneyBtn.Style = lightButton;
+            sortByPercentsBtn.Style = lightButton;
+            moneyListBox.Style = lightListBox;
+            percentsListBox.Style = lightListBox;
+            categoriesListBox.Style = lightListBox;
+            mainToolBar.Style = lightToolBar;
+            secondToolBar.Style = lightToolBar;
+            dockPannel.Style = lightDockPannel;
+            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollarLight.png"));
+
         }
     }
 }

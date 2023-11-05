@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FinancingManager"
         mc:Ignorable="d"
         Title="ChangeLimitWindow" Height="300" Width="500">
-    <DockPanel Background="Black">
+    <DockPanel Name="dockPannel" Style="{StaticResource DockPannelStyleDark}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -23,15 +23,16 @@
 
             <Border Width="70" Height="70" CornerRadius="6" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,5,0,0" VerticalAlignment="Center">
                 <Border.Background>
-                    <ImageBrush Stretch="Fill" ImageSource="\FilesForWpf\moneyBag.jpg"/>
+                    <ImageBrush x:Name="BorderImage" Stretch="Fill" ImageSource="\FilesForWpf\moneyBag.jpg"/>
                 </Border.Background>
             </Border>
+            
 
-            <Label Grid.Row="1" Style="{StaticResource LabelStyleDark}">Enter new limit :</Label>
-            <TextBox x:Name="LimitTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyleDark}"></TextBox>
+            <Label Name="newLimitLabel" Grid.Row="1" Style="{StaticResource LabelStyleDark}">Enter new limit :</Label>
+            <TextBox x:Name="limitTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Height="35" Style="{StaticResource TextBoxStyleDark}"></TextBox>
 
-            <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonlStyleDark}" Width="190" Height="40" Click="SaveChanges_Click">Save changes</Button>
-            <Button Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonlStyleDark}" Width="190" Height="40" Click="Cancel_Click">Cancel</Button>
+            <Button x:Name="saveChangesBtn" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonlStyleDark}" Width="190" Height="40" Click="SaveChanges_Click">Save changes</Button>
+            <Button x:Name="cancelBtn" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource ButtonlStyleDark}" Width="190" Height="40" Click="Cancel_Click">Cancel</Button>
         </Grid>
 
     </DockPanel>

@@ -16,7 +16,7 @@ namespace EntityFramework.Entities
         public virtual Category Category { get; set; }
         public override string ToString()
         {
-            return $"Name: {Name} Price: {Price} Category: {Category.Name}";
+            return $"{Name} Price: {Price} Category: {Category.Name}";
         }
     }
 }

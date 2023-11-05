@@ -22,6 +22,7 @@ namespace FinancingManager
     public partial class AddCosts : Window
     {
         UnitOfWork UoW = new UnitOfWork();
+        string theme;
         private void FillComboBox()
         {
             foreach(var item in UoW.CategoryRepo.Get())
@@ -29,10 +30,44 @@ namespace FinancingManager
                 categories.Items.Add(item);
             }
         }
-        public AddCosts()
+        private void Themes(string theme)
+        {
+            if (theme == "Dark")
+            {
+                Style darkDockPannel = (Style)FindResource("DockPannelStyleDark");
+                Style darkLabel = (Style)FindResource("LabelStyleDark");
+                Style darkTextBox = (Style)FindResource("TextBoxStyleDark");
+                Style darkButton = (Style)FindResource("ButtonlStyleDark");
+                categoryLabel.Style = darkLabel;
+                nameLabel.Style = darkTextBox;
+                priceLabel.Style = darkButton;
+                NameTb.Style = darkButton;
+                PriceTb.Style = darkButton;
+                addCostBtn.Style = darkButton;
+                cancelBtn.Style = darkButton;
+                dockPannel.Style = darkButton;
+            }
+            else if(theme == "Light")
+            {
+                Style lightDockPannel = (Style)FindResource("DockPannelLight");
+                Style lightLabel = (Style)FindResource("LabelStyleLight");
+                Style lightTextBox = (Style)FindResource("TextBoxStyleLight");
+                Style lightButton = (Style)FindResource("ButtonStykeLight");
+                categoryLabel.Style = lightLabel;
+                nameLabel.Style = lightTextBox;
+                priceLabel.Style = lightButton;
+                NameTb.Style = lightTextBox;
+                PriceTb.Style = lightTextBox;
+                addCostBtn.Style = lightButton;
+                cancelBtn.Style = lightButton;
+                dockPannel.Style = lightButton;
+            }
+        }
+        public AddCosts(string Theme)
         {
             InitializeComponent();
             FillComboBox();
+            this.theme = Theme;
         }
 
         private void AddCostBtn_Click(object sender, RoutedEventArgs e)
