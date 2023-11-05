@@ -49,18 +49,18 @@ namespace FinancingManager
             }
             else if(theme == "Light")
             {
-                Style lightDockPannel = (Style)FindResource("DockPannelLight");
+                Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
                 Style lightLabel = (Style)FindResource("LabelStyleLight");
                 Style lightTextBox = (Style)FindResource("TextBoxStyleLight");
-                Style lightButton = (Style)FindResource("ButtonStykeLight");
+                Style lightButton = (Style)FindResource("ButtonlStyleLight");
                 categoryLabel.Style = lightLabel;
-                nameLabel.Style = lightTextBox;
-                priceLabel.Style = lightButton;
+                nameLabel.Style = lightLabel;
+                priceLabel.Style = lightLabel;
                 NameTb.Style = lightTextBox;
                 PriceTb.Style = lightTextBox;
                 addCostBtn.Style = lightButton;
                 cancelBtn.Style = lightButton;
-                dockPannel.Style = lightButton;
+                dockPannel.Style = lightDockPannel;
             }
         }
         public AddCosts(string Theme)
@@ -68,6 +68,7 @@ namespace FinancingManager
             InitializeComponent();
             FillComboBox();
             this.theme = Theme;
+            Themes(theme);
         }
 
         private void AddCostBtn_Click(object sender, RoutedEventArgs e)
