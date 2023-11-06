@@ -23,10 +23,14 @@ namespace FinancingManager
     public partial class AddCosts : Window
     {
         UnitOfWork UoW = new UnitOfWork();
+
+        public int currentCategotyId = 0;
+        public string currentCategoryName = string.Empty;
         string theme;
+    
         private void FillComboBox()
         {
-            foreach(var item in UoW.CategoryRepo.Get())
+            foreach (var item in UoW.CategoryRepo.Get())
             {
                 categories.Items.Add(item);
             }
@@ -48,7 +52,7 @@ namespace FinancingManager
                 cancelBtn.Style = darkButton;
                 dockPannel.Style = darkButton;
             }
-            else if(theme == "Light")
+            else if (theme == "Light")
             {
                 Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
                 Style lightLabel = (Style)FindResource("LabelStyleLight");
@@ -75,9 +79,9 @@ namespace FinancingManager
         private void AddCostBtn_Click(object sender, RoutedEventArgs e)
         {
             var MoneySpentSumm = UoW.CategoryRepo.Get().Select(x => x.Summ).Sum();
-         if(MoneySpentSumm + Convert.ToDecimal(PriceTb.Text) <  UoW.LimitRepo.Get().Select(x => x.Value).Last())
-         { 
-
+            if (MoneySpentSumm + Convert.ToDecimal(PriceTb.Text) < UoW.LimitRepo.Get().Select(x => x.Value).Last())
+            { 
+                
             UoW.CostRepo.Insert(new Cost()
             {
                 Name = NameTb.Text,
@@ -85,17 +89,26 @@ namespace FinancingManager
                 Price = Convert.ToDecimal(PriceTb.Text),
             });
             UoW.Save();
+            var lastCost = UoW.CostRepo.Get().Last();
+            currentCategotyId = lastCost.CategoryId;
+            var currentCategory = UoW.CategoryRepo.Get().Where(X => X.Id == lastCost.CategoryId).Last();
+            currentCategoryName = currentCategory.Name;
+            currentCategory.Summ += lastCost.Price;
+            UoW.CategoryRepo.Update(currentCategory);
+            UoW.Save();
+            this.DialogResult = true;
             this.Close();
-         }
-         else
+            }
+            else
             {
                 MessageBox.Show("YOU HAVE EXCEEDED THE LIMIT");
             }
-		}
+        }
 
-		private void CancelBtn_Click(object sender, RoutedEventArgs e)
-		{
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
             this.Close();
-		}
-	}
+        }
+    }
 }

@@ -69,10 +69,10 @@ namespace FinanceManager
             {
                 AddDiagram(item);
             }
-
             SetLimit();
             FillListBoxes();
             ItemSource();
+            CalculateSpentMoney();
         }
         private void ItemSource()
         {
@@ -212,7 +212,9 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
-		}
+            var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
+            Diagram.Series.Remove(pie);
+        }
 
 
 
@@ -240,6 +242,8 @@ namespace FinanceManager
                 ItemSource();
                 FillListBoxes();
                 CalculateSpentMoney();
+
+                AddDiagram(currentCategory);
             }
 
         }

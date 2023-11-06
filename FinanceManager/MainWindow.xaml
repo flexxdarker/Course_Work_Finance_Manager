@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FinanceManager"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1150">
+        Title="MainWindow" MinHeight="550" MinWidth="1200" Height="550" Width="1200">
 
     <DockPanel Name="dockPannel" Style="{StaticResource DockPannelStyleDark}">
         <Grid>
@@ -24,12 +24,13 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <ToolBar Grid.Column="0" Grid.ColumnSpan="3" Name="mainToolBar" Margin="80,0,0,0" Style="{StaticResource ToolBarStyleDark}">
+            <ToolBar Grid.Column="0" Grid.ColumnSpan="4" Name="mainToolBar" Margin="80,0,200,0" Style="{StaticResource ToolBarStyleDark}">
                 <Label Name="currentLimitLabel" Style="{StaticResource LabelStyleDark}">Current limit is</Label>
                 <Label x:Name="limitLabel" Style="{StaticResource LabelStyleDark}">0</Label>
                 <Label Name="limitDollarLabel" Style="{StaticResource LabelStyleDark}">$</Label>
                 <Button x:Name="changeLimitBtn" Style="{StaticResource ButtonlStyleDark}" Click="ChangeLimit_Click">Change limit</Button>
                 <Button x:Name="addCategoryBtn" Style="{StaticResource ButtonlStyleDark}" Click="AddCategory_Click">Add category</Button>
+                <Button x:Name="addCostBtn"  Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyleDark}" Margin="10,0,0,0"/>
                 <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
                     <Button x:Name="sortByNameBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByName">Sort by Name</Button>
                     <Button x:Name="sortByMoneyBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByMoney">Sort by Money</Button>
@@ -83,17 +84,16 @@
                 <Label Name="spentLabel" Style="{StaticResource LabelStyleDark}">Money was spent:</Label>
                 <Label  x:Name="moneySpentLabel" Style="{StaticResource LabelStyleDark}">0</Label>
                 <Label Name="dollarSpentLabel" Style="{StaticResource LabelStyleDark}">$</Label>
-                <Button x:Name="addCostBtn" Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyleDark}" Margin="100,0,0,0"/>
             </ToolBar>
 
-            <Button x:Name="limitHistoryBtn" Grid.Column="3" Style="{StaticResource ButtonlStyleDark}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="5,0,0,0">Limits history</Button>
+            <Button x:Name="limitHistoryBtn" Grid.Column="3" Style="{StaticResource ButtonlStyleDark}" HorizontalAlignment="Left" Click="LimitHistory_Click" Margin="105,0,0,0">Limits history</Button>
             <Button x:Name="exitBtn" Grid.Column="3" Style="{StaticResource ButtonlStyleDark}" HorizontalAlignment="Right" Click="Exit_Click" Width="60" Margin="0,0,5,0">Exit</Button>
 
             <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <lvc:PieChart x:Name="Diagram" StartingRotationAngle="0"  Margin="5,5,5,0" Loaded="Diagram_Loaded" Height="360"/>
             </StackPanel>
 
-            <Button x:Name="deleteCategoryBtn" Grid.Column="2" Grid.Row="3" Style="{StaticResource ButtonlStyleDark}" Margin="0" Width="240" Click="DeleteCategory_Click">Delete category</Button>
+            <Button x:Name="deleteCategoryBtn" Grid.ColumnSpan="2" Grid.Column="2" Grid.Row="3" Style="{StaticResource ButtonlStyleDark}" Margin="0" Width="580" Click="DeleteCategory_Click">Delete category</Button>
         </Grid>
     </DockPanel>
 </Window>
