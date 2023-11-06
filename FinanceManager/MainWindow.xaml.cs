@@ -252,15 +252,6 @@ namespace FinanceManager
             Diagram.Series.Remove(pie);
         }
 
-
-
-
-		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-             var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
-            Diagram.Series.Remove(pie);
-        }
-
         private void AddCost_Click(object sender, RoutedEventArgs e)
         {
             AddCosts addcost = new AddCosts(theme);
@@ -282,9 +273,6 @@ namespace FinanceManager
                 CalculateSpentMoney();
 
                 AddDiagram(currentCategory);
-            }
-
-
             }
         }
 

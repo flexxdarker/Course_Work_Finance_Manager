@@ -31,7 +31,6 @@
                 <Button x:Name="addCategoryBtn" Style="{StaticResource ButtonlStyleDark}" Click="AddCategory_Click">Add category</Button>
 
                 <Button x:Name="addCostBtn"  Content="Add Cost" Click="AddCost_Click" Style="{StaticResource ButtonlStyleDark}" Margin="10,0,0,0"/>
-                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
 
                 <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black">
                     <Button x:Name="sortByNameBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByName">Sort by Name</Button>
