@@ -30,12 +30,12 @@
                 <Label Name="limitDollarLabel" Style="{StaticResource LabelStyleDark}">$</Label>
                 <Button x:Name="changeLimitBtn" Style="{StaticResource ButtonlStyleDark}" Click="ChangeLimit_Click">Change limit</Button>
                 <Button x:Name="addCategoryBtn" Style="{StaticResource ButtonlStyleDark}" Click="AddCategory_Click">Add category</Button>
-                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black">
                     <Button x:Name="sortByNameBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByName">Sort by Name</Button>
                     <Button x:Name="sortByMoneyBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByMoney">Sort by Money</Button>
                     <Button x:Name="sortByPercentsBtn" Style="{StaticResource ButtonlStyleDark}" Click="SortByPercents">Sort by Percents</Button>
                 </ComboBox>
-                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox Width="120" Margin="10,0,0,0" Height="30" Background="Black" >
                     <Button Style="{StaticResource ButtonlStyleDark}" Name="darkThemeBtn" Click="DarkThemeBtn_Click">Dark Theme</Button>
                     <Button Style="{StaticResource ButtonlStyleDark}" Name="lightThemeBtn" Click="LightThemeBtn_Click">Light Theme</Button>
                 </ComboBox>
