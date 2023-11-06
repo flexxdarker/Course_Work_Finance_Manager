@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace FinancingManager
@@ -73,6 +74,10 @@ namespace FinancingManager
 
         private void AddCostBtn_Click(object sender, RoutedEventArgs e)
         {
+            var MoneySpentSumm = UoW.CategoryRepo.Get().Select(x => x.Summ).Sum();
+         if(MoneySpentSumm + Convert.ToDecimal(PriceTb.Text) <  UoW.LimitRepo.Get().Select(x => x.Value).Last())
+         { 
+
             UoW.CostRepo.Insert(new Cost()
             {
                 Name = NameTb.Text,
@@ -81,6 +86,11 @@ namespace FinancingManager
             });
             UoW.Save();
             this.Close();
+         }
+         else
+            {
+                MessageBox.Show("YOU HAVE EXCEEDED THE LIMIT");
+            }
 		}
 
 		private void CancelBtn_Click(object sender, RoutedEventArgs e)

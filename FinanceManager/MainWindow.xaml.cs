@@ -37,6 +37,7 @@ namespace FinanceManager
         const decimal defaultLimit = 10000;
         decimal limit = 1;
         string theme;
+        decimal Money;
         void AddDiagram(Category item)
            {   
             
@@ -48,9 +49,16 @@ namespace FinanceManager
                    Values = new ChartValues<double> 
                    { 
                        (Convert.ToDouble((item.Summ / 100)))
-                   }
-               });
-           }
+                }
+            });
+        }
+        void CalculateSpentMoney()
+        {
+            var MoneySpentSumm = uow.CategoryRepo.Get().Select(x => x.Summ).Sum();
+            moneySpentLabel.Content = MoneySpentSumm;
+            Money = MoneySpentSumm;
+        }
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -216,8 +224,25 @@ namespace FinanceManager
         private void AddCost_Click(object sender, RoutedEventArgs e)
 		{
             AddCosts addcost = new AddCosts(theme);
-            addcost.ShowDialog();
-	    }
+            if (addcost.ShowDialog() == true)
+            {
+                var currentCategory = uow.CategoryRepo.Get().Where(x => x.Id == addcost.currentCategotyId).Last();
+                int id = 0;
+                foreach (var item in categoriesListBox.Items)
+                {
+                    if (item == currentCategory.Name)
+                    {
+                        id = categoriesListBox.Items.IndexOf(item);
+                    }
+                }
+                categories[id].Summ = currentCategory.Summ;
+                categories[id].Persent = currentCategory.Summ * 100 / limit;
+                ItemSource();
+                FillListBoxes();
+                CalculateSpentMoney();
+            }
+
+        }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
