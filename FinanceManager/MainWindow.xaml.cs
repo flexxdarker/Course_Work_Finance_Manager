@@ -165,7 +165,13 @@ namespace FinanceManager
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)
         {
-
+            var Limits = uow.LimitRepo.Get();
+            string limitsStr = string.Empty;
+            foreach(var item in Limits)
+            {
+                limitsStr += $"{item.Value}\n";
+            }
+            MessageBox.Show(limitsStr);
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
