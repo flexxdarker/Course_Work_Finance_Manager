@@ -24,6 +24,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -39,15 +40,16 @@ namespace FinanceManager
         string theme;
         decimal Money;
         void AddDiagram(Category item)
-           {   
-            
-                Diagram.Series.Add(new PieSeries { 
-                   
-                   Title= item.Name,
-                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
-                   StrokeThickness = 0,
-                   Values = new ChartValues<double> 
-                   { 
+        {
+
+            Diagram.Series.Add(new PieSeries
+            {
+
+                Title = item.Name,
+                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R, item.Color.G, item.Color.B)),
+                StrokeThickness = 0,
+                Values = new ChartValues<double>
+                {
                        (Convert.ToDouble((item.Summ / 100)))
                 }
             });
@@ -56,22 +58,24 @@ namespace FinanceManager
         {
             var MoneySpentSumm = uow.CategoryRepo.Get().Select(x => x.Summ).Sum();
             moneySpentLabel.Content = MoneySpentSumm;
+
             Money = MoneySpentSumm;
         }
-        
+       
         public MainWindow()
         {
             InitializeComponent();
 
             Random r = new Random();
-      
+
             foreach (var item in uow.CategoryRepo.Get())
             {
                 AddDiagram(item);
             }
             SetLimit();
-            FillListBoxes();
             ItemSource();
+            FillListBoxes();
+
             CalculateSpentMoney();
         }
         private void ItemSource()
@@ -126,36 +130,39 @@ namespace FinanceManager
 
             uow.Save();
         }
-        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            // запуск вікна з виведенням покупок по категорії
-        }
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory(uow,theme);
-            if (addCategory.ShowDialog() == true)
+            try
             {
-                try
+                addCategory = new AddCategory(uow, theme);
+                if (addCategory.ShowDialog() == true)
                 {
-                    //витягання з бази доданої категорії 
-                    var lastCategory = uow.CategoryRepo.Get().Last();
+                    try
+                    {
+                        //витягання з бази доданої категорії 
+                        var lastCategory = uow.CategoryRepo.Get().Last();
 
-                    //виведення її в список категорій
-                    limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                        //виведення її в список категорій
+                        limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
-                    //
-                    categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
-                    ItemSource();
+                        categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                        ItemSource();
+                        FillListBoxes();
 
-                    AddDiagram(lastCategory);
+                        AddDiagram(lastCategory);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    uow.Save();
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-                uow.Save();
-
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
         }
@@ -221,10 +228,12 @@ namespace FinanceManager
 
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+             var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
+            Diagram.Series.Remove(pie);
         }
+
         private void AddCost_Click(object sender, RoutedEventArgs e)
-		{
+        {
             AddCosts addcost = new AddCosts(theme);
             if (addcost.ShowDialog() == true)
             {
@@ -246,15 +255,17 @@ namespace FinanceManager
                 AddDiagram(currentCategory);
             }
 
+
+            }
         }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             var selectedObject = categoriesListBox.SelectedItem as CategoryView;
+            var selectedObject = categoriesListBox.SelectedItem as CategoryView;
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name, theme);
+            ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
-        
+
         }
 
         private void DarkThemeBtn_Click(object sender, RoutedEventArgs e)
@@ -291,7 +302,6 @@ namespace FinanceManager
             mainToolBar.Style = darkToolBar;
             secondToolBar.Style = darkToolBar;
             dockPannel.Style = darkDockPannel;
-            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollar.jpg"));
         }
 
         private void LightThemeBtn_Click(object sender, RoutedEventArgs e)
@@ -328,8 +338,6 @@ namespace FinanceManager
             mainToolBar.Style = lightToolBar;
             secondToolBar.Style = lightToolBar;
             dockPannel.Style = lightDockPannel;
-            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollarLight.png"));
-
         }
     }
 }

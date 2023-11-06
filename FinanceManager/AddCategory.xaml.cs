@@ -86,7 +86,7 @@ namespace FinancingManager
                 var origColor = (Color)ColorConverter.ConvertFromString(prop.Name);
                 System.Drawing.Color color= System.Drawing.Color.FromArgb(origColor.A, origColor.R, origColor.G, origColor.B);
                 
-                Category = new Category { Name = NewName, Summ = 500, AcountId = lastAccountId, LimitId = lastLimitId, Color = color };
+                Category = new Category { Name = NewName, Summ = 0, AcountId = lastAccountId, LimitId = lastLimitId, Color = color };
                 uow.CategoryRepo.Insert(Category);
             }
             catch(Exception ex)
