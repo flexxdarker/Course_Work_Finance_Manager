@@ -38,6 +38,7 @@ namespace FinanceManager
         const decimal defaultLimit = 10000;
         decimal limit = 1;
         string theme;
+        decimal Money;
         void AddDiagram(Category item)
         {
 
@@ -57,7 +58,10 @@ namespace FinanceManager
         {
             var MoneySpentSumm = uow.CategoryRepo.Get().Select(x => x.Summ).Sum();
             moneySpentLabel.Content = MoneySpentSumm;
+
+            Money = MoneySpentSumm;
         }
+       
         public MainWindow()
         {
             InitializeComponent();
@@ -68,15 +72,12 @@ namespace FinanceManager
             {
                 AddDiagram(item);
             }
-
-           
+    
             SetListBoxesOnStart();
-
             SetLimit();
             FillListBoxes();
             ItemSource();
             CalculateSpentMoney();
-
         }
         void SetListBoxesOnStart()
         {
@@ -241,6 +242,15 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
+            var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
+            Diagram.Series.Remove(pie);
+        }
+
+
+
+
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
              var pie = Diagram.Series.FirstOrDefault(x => x.Title == SelectedCategory.Name);
             Diagram.Series.Remove(pie);
         }
@@ -264,6 +274,11 @@ namespace FinanceManager
                 ItemSource();
                 FillListBoxes();
                 CalculateSpentMoney();
+
+                AddDiagram(currentCategory);
+            }
+
+
             }
         }
 
