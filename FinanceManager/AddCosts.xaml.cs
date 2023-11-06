@@ -12,6 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
 
 namespace FinancingManager
@@ -26,9 +27,10 @@ namespace FinancingManager
         public int currentCategotyId = 0;
         public string currentCategoryName = string.Empty;
         string theme;
+    
         private void FillComboBox()
         {
-            foreach(var item in UoW.CategoryRepo.Get())
+            foreach (var item in UoW.CategoryRepo.Get())
             {
                 categories.Items.Add(item);
             }
@@ -50,7 +52,7 @@ namespace FinancingManager
                 cancelBtn.Style = darkButton;
                 dockPannel.Style = darkButton;
             }
-            else if(theme == "Light")
+            else if (theme == "Light")
             {
                 Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
                 Style lightLabel = (Style)FindResource("LabelStyleLight");
@@ -76,6 +78,10 @@ namespace FinancingManager
 
         private void AddCostBtn_Click(object sender, RoutedEventArgs e)
         {
+            var MoneySpentSumm = UoW.CategoryRepo.Get().Select(x => x.Summ).Sum();
+            if (MoneySpentSumm + Convert.ToDecimal(PriceTb.Text) < UoW.LimitRepo.Get().Select(x => x.Value).Last())
+            { 
+                
             UoW.CostRepo.Insert(new Cost()
             {
                 Name = NameTb.Text,
@@ -92,12 +98,17 @@ namespace FinancingManager
             UoW.Save();
             this.DialogResult = true;
             this.Close();
-		}
+            }
+            else
+            {
+                MessageBox.Show("YOU HAVE EXCEEDED THE LIMIT");
+            }
+        }
 
-		private void CancelBtn_Click(object sender, RoutedEventArgs e)
-		{
+        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        {
             this.DialogResult = false;
             this.Close();
-		}
-	}
+        }
+    }
 }
