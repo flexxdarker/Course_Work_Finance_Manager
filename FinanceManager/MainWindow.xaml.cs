@@ -24,6 +24,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManager
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -36,6 +37,17 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
+        void AddDiagram(Category item)
+        {
+
+            Diagram.Series.Add(new PieSeries
+            {
+
+                Title = item.Name,
+                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R, item.Color.G, item.Color.B)),
+                StrokeThickness = 0,
+                Values = new ChartValues<double>
+                   {
         string theme;
         void AddDiagram(Category item)
            {   
@@ -49,14 +61,14 @@ namespace FinanceManager
                    { 
                        (Convert.ToDouble((item.Summ / 100)))
                    }
-               });
-           }
+            });
+        }
         public MainWindow()
         {
             InitializeComponent();
 
             Random r = new Random();
-      
+
             foreach (var item in uow.CategoryRepo.Get())
             {
                 AddDiagram(item);
@@ -68,6 +80,9 @@ namespace FinanceManager
         }
         private void ItemSource()
         {
+            CategoriesListBox.ItemsSource = categories;
+            MoneyListBox.ItemsSource = categories;
+            PercentsListBox.ItemsSource = categories;
             categoriesListBox.ItemsSource = categories;
             moneyListBox.ItemsSource = categories;
             percentsListBox.ItemsSource = categories;
@@ -124,6 +139,9 @@ namespace FinanceManager
         }
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
+            addCategory = new AddCategory(uow);
+            addCategory.ShowDialog();
+            try
             addCategory = new AddCategory(uow,theme);
             if (addCategory.ShowDialog() == true)
             {
@@ -208,11 +226,39 @@ namespace FinanceManager
 
 
 
-
 		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+    {
 
+    }
+
+
+
+        private void AddCost_Click(object sender, RoutedEventArgs e)
+        {
+            AddCosts addcost = new AddCosts();
+            if (addcost.ShowDialog() == true)
+            {
+                var currentCategory = uow.CategoryRepo.Get().Where(x => x.Id == addcost.currentCategotyId).Last();
+                int id = 0;
+                foreach (var item in CategoriesListBox.Items)
+                {
+                    if (item == currentCategory.Name)
+                    {
+                        id = CategoriesListBox.Items.IndexOf(item);
+                    }
+                }
+                categories[id].Summ = currentCategory.Summ;
+                categories[id].Persent = currentCategory.Summ * 100 / limit;
+                ItemSource();
+                FillListBoxes();
+            }
         }
+
+        private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
+
+            ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name);
         private void AddCost_Click(object sender, RoutedEventArgs e)
 		{
             AddCosts addcost = new AddCosts(theme);
@@ -225,7 +271,7 @@ namespace FinanceManager
 
             ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
-        
+
         }
 
         private void DarkThemeBtn_Click(object sender, RoutedEventArgs e)
@@ -262,7 +308,6 @@ namespace FinanceManager
             mainToolBar.Style = darkToolBar;
             secondToolBar.Style = darkToolBar;
             dockPannel.Style = darkDockPannel;
-            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollar.jpg"));
         }
 
         private void LightThemeBtn_Click(object sender, RoutedEventArgs e)
@@ -299,7 +344,6 @@ namespace FinanceManager
             mainToolBar.Style = lightToolBar;
             secondToolBar.Style = lightToolBar;
             dockPannel.Style = lightDockPannel;
-            //imageDollar.ImageSource = new BitmapImage(new Uri("/FilesForWpf/dollarLight.png"));
 
         }
     }
