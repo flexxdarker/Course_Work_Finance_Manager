@@ -37,17 +37,6 @@ namespace FinanceManager
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
         decimal limit = 1;
-        void AddDiagram(Category item)
-        {
-
-            Diagram.Series.Add(new PieSeries
-            {
-
-                Title = item.Name,
-                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R, item.Color.G, item.Color.B)),
-                StrokeThickness = 0,
-                Values = new ChartValues<double>
-                   {
         string theme;
         void AddDiagram(Category item)
            {   
@@ -80,9 +69,9 @@ namespace FinanceManager
         }
         private void ItemSource()
         {
-            CategoriesListBox.ItemsSource = categories;
-            MoneyListBox.ItemsSource = categories;
-            PercentsListBox.ItemsSource = categories;
+            categoriesListBox.ItemsSource = categories;
+            moneyListBox.ItemsSource = categories;
+            percentsListBox.ItemsSource = categories;
             categoriesListBox.ItemsSource = categories;
             moneyListBox.ItemsSource = categories;
             percentsListBox.ItemsSource = categories;
@@ -139,33 +128,41 @@ namespace FinanceManager
         }
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory(uow);
+            addCategory = new AddCategory(uow,theme);
             addCategory.ShowDialog();
             try
-            addCategory = new AddCategory(uow,theme);
-            if (addCategory.ShowDialog() == true)
             {
-                try
+
+
+                addCategory = new AddCategory(uow, theme);
+                if (addCategory.ShowDialog() == true)
                 {
-                    //витягання з бази доданої категорії 
-                    var lastCategory = uow.CategoryRepo.Get().Last();
+                    try
+                    {
+                        //витягання з бази доданої категорії 
+                        var lastCategory = uow.CategoryRepo.Get().Last();
 
-                    //виведення її в список категорій
-                    limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                        //виведення її в список категорій
+                        limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
-                    //
-                    categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
-                    ItemSource();
+                        //
+                        categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                        ItemSource();
 
-                    AddDiagram(lastCategory);
+                        AddDiagram(lastCategory);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+                    uow.Save();
+
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
-                uow.Save();
-
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
 
         }
@@ -235,16 +232,16 @@ namespace FinanceManager
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
         {
-            AddCosts addcost = new AddCosts();
+            AddCosts addcost = new AddCosts(theme);
             if (addcost.ShowDialog() == true)
             {
                 var currentCategory = uow.CategoryRepo.Get().Where(x => x.Id == addcost.currentCategotyId).Last();
                 int id = 0;
-                foreach (var item in CategoriesListBox.Items)
+                foreach (var item in categoriesListBox.Items)
                 {
                     if (item == currentCategory.Name)
                     {
-                        id = CategoriesListBox.Items.IndexOf(item);
+                        id = categoriesListBox.Items.IndexOf(item);
                     }
                 }
                 categories[id].Summ = currentCategory.Summ;
@@ -253,17 +250,6 @@ namespace FinanceManager
                 FillListBoxes();
             }
         }
-
-        private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
-
-            ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name);
-        private void AddCost_Click(object sender, RoutedEventArgs e)
-		{
-            AddCosts addcost = new AddCosts(theme);
-            addcost.ShowDialog();
-	    }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
