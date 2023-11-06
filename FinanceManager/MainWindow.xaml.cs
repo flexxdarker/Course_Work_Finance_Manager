@@ -39,18 +39,24 @@ namespace FinanceManager
         decimal limit = 1;
         string theme;
         void AddDiagram(Category item)
-           {   
-            
-                Diagram.Series.Add(new PieSeries { 
-                   
-                   Title= item.Name,
-                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
-                   StrokeThickness = 0,
-                   Values = new ChartValues<double> 
-                   { 
+        {
+
+            Diagram.Series.Add(new PieSeries
+            {
+
+                Title = item.Name,
+                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R, item.Color.G, item.Color.B)),
+                StrokeThickness = 0,
+                Values = new ChartValues<double>
+                {
                        (Convert.ToDouble((item.Summ / 100)))
-                   }
+                }
             });
+        }
+        void CalculateSpentMoney()
+        {
+            var MoneySpentSumm = uow.CategoryRepo.Get().Select(x => x.Summ).Sum();
+            moneySpentLabel.Content = MoneySpentSumm;
         }
         public MainWindow()
         {
@@ -64,14 +70,12 @@ namespace FinanceManager
             }
 
             SetLimit();
-            FillListBoxes();
             ItemSource();
+            FillListBoxes();
+            CalculateSpentMoney();
         }
         private void ItemSource()
         {
-            categoriesListBox.ItemsSource = categories;
-            moneyListBox.ItemsSource = categories;
-            percentsListBox.ItemsSource = categories;
             categoriesListBox.ItemsSource = categories;
             moneyListBox.ItemsSource = categories;
             percentsListBox.ItemsSource = categories;
@@ -122,18 +126,10 @@ namespace FinanceManager
 
             uow.Save();
         }
-        private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            // запуск вікна з виведенням покупок по категорії
-        }
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            addCategory = new AddCategory(uow,theme);
-            addCategory.ShowDialog();
             try
             {
-
-
                 addCategory = new AddCategory(uow, theme);
                 if (addCategory.ShowDialog() == true)
                 {
@@ -145,9 +141,9 @@ namespace FinanceManager
                         //виведення її в список категорій
                         limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
-                        //
                         categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
                         ItemSource();
+                        FillListBoxes();
 
                         AddDiagram(lastCategory);
                     }
@@ -160,7 +156,7 @@ namespace FinanceManager
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -219,16 +215,7 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
-		}
-
-
-
-		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
-
+        }
 
         private void AddCost_Click(object sender, RoutedEventArgs e)
         {
@@ -248,14 +235,15 @@ namespace FinanceManager
                 categories[id].Persent = currentCategory.Summ * 100 / limit;
                 ItemSource();
                 FillListBoxes();
+                CalculateSpentMoney();
             }
         }
 
         private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-             var selectedObject = categoriesListBox.SelectedItem as CategoryView;
+            var selectedObject = categoriesListBox.SelectedItem as CategoryView;
 
-            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name, theme);
+            ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
 
         }
@@ -330,7 +318,6 @@ namespace FinanceManager
             mainToolBar.Style = lightToolBar;
             secondToolBar.Style = lightToolBar;
             dockPannel.Style = lightDockPannel;
-
         }
     }
 }
