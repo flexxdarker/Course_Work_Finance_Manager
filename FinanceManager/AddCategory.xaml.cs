@@ -23,21 +23,51 @@ namespace FinancingManager
     /// </summary>
     public partial class AddCategory : Window
     {
-        private IUoW uow;
-        public Category Category {get; set; }
+        private IUoW? uow;
+        public Category? Category {get; set; }
+        string theme;
+        private void Themes(string theme)
+        {
+            if (theme == "Dark")
+            {
+                Style darkButton = (Style)FindResource("ButtonlStyleDark");
+                Style darkDockPannel = (Style)FindResource("DockPannelStyleDark");
+                Style darkLabel = (Style)FindResource("LabelStyleDark");
+                Style darkTextBox = (Style)FindResource("TextBoxStyleDark");
+                categoryNameLabel.Style = darkLabel;
+                categoryTextBox.Style = darkTextBox;
+                saveBtn.Style = darkButton;
+                cancelBtn.Style = darkButton;
+                dockPannel.Style = darkDockPannel;
+            }
+            else if(theme == "Light")
+            {
+                Style lightButton = (Style)FindResource("ButtonlStyleLight");
+                Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
+                Style lightLabel = (Style)FindResource("LabelStyleLight");
+                Style lightTextBox = (Style)FindResource("TextBoxStyleLight");
+                categoryNameLabel.Style = lightLabel;
+                categoryTextBox.Style = lightTextBox;
+                saveBtn.Style = lightButton;
+                cancelBtn.Style = lightButton;
+                dockPannel.Style = lightDockPannel;
+            }
+        }
         public AddCategory()
         {
             InitializeComponent();
-           
+            theme = "Dark";
         }
-        public AddCategory(IUoW uow)
+        public AddCategory(IUoW uow, string Theme)
         {
             InitializeComponent();
             this.uow = uow;
+            theme = Theme;
+            Themes(theme);
         }
         private void SaveCategory_Click(object sender, RoutedEventArgs e)
         {
-            string NewName = CategoryTextBox.Text;
+            string NewName = categoryTextBox.Text;
             // перевірка чи є категорія в базі
             try
             {
@@ -64,13 +94,16 @@ namespace FinancingManager
                 MessageBox.Show(ex.Message);
             }
 
-            CategoryTextBox.Text = string.Empty;
+            categoryTextBox.Text = string.Empty;
+
             uow.Save();
+            this.DialogResult = true;
             this.Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
 

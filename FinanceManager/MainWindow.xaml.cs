@@ -25,18 +25,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace FinanceManager
 {
 
-
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-
     public partial class MainWindow : Window
     {
         ObservableCollection<CategoryView> categories = new ObservableCollection<CategoryView>();
-
-        private IUoW uow = new UnitOfWork();
+        IUoW uow = new UnitOfWork();
         ChangeLimitWindow? changeLimitWindow;
         AddCategory? addCategory;
         const decimal defaultLimit = 10000;
@@ -52,6 +48,17 @@ namespace FinanceManager
                 StrokeThickness = 0,
                 Values = new ChartValues<double>
                    {
+        string theme;
+        void AddDiagram(Category item)
+           {   
+            
+                Diagram.Series.Add(new PieSeries { 
+                   
+                   Title= item.Name,
+                   Fill= new SolidColorBrush(System.Windows.Media.Color.FromRgb(item.Color.R,item.Color.G,item.Color.B)), 
+                   StrokeThickness = 0,
+                   Values = new ChartValues<double> 
+                   { 
                        (Convert.ToDouble((item.Summ / 100)))
                    }
             });
@@ -67,7 +74,6 @@ namespace FinanceManager
                 AddDiagram(item);
             }
 
-
             SetLimit();
             FillListBoxes();
             ItemSource();
@@ -77,17 +83,20 @@ namespace FinanceManager
             CategoriesListBox.ItemsSource = categories;
             MoneyListBox.ItemsSource = categories;
             PercentsListBox.ItemsSource = categories;
+            categoriesListBox.ItemsSource = categories;
+            moneyListBox.ItemsSource = categories;
+            percentsListBox.ItemsSource = categories;
         }
         private void SetLimit()
         {
             limit = defaultLimit;
             var limits = uow.LimitRepo.Get();
             if (limits.Count() == 0)
-                LimitLabel.Content = defaultLimit;
+                limitLabel.Content = defaultLimit;
             else
             {
                 limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
-                LimitLabel.Content = limit;
+                limitLabel.Content = limit;
             }
         }
         private void FillListBoxes()
@@ -105,7 +114,7 @@ namespace FinanceManager
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
-            changeLimitWindow = new ChangeLimitWindow(ref uow);
+            changeLimitWindow = new ChangeLimitWindow(ref uow, theme);
             changeLimitWindow.ShowDialog();
 
             // витягання з бази останнього елементу з таблиці лімітів
@@ -113,7 +122,7 @@ namespace FinanceManager
             {
                 var lastLimit = uow.LimitRepo.Get().Last();
                 limit = lastLimit.Value;
-                LimitLabel.Content = limit;
+                limitLabel.Content = limit;
 
                 FillListBoxes();
             }
@@ -124,87 +133,83 @@ namespace FinanceManager
 
             uow.Save();
         }
-
         private void ShowExpenses_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             // запуск вікна з виведенням покупок по категорії
         }
-
         private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-
             addCategory = new AddCategory(uow);
             addCategory.ShowDialog();
-
             try
+            addCategory = new AddCategory(uow,theme);
+            if (addCategory.ShowDialog() == true)
             {
-                //витягання з бази доданої категорії 
-                var lastCategory = uow.CategoryRepo.Get().Last();
+                try
+                {
+                    //витягання з бази доданої категорії 
+                    var lastCategory = uow.CategoryRepo.Get().Last();
 
-                //виведення її в список категорій
-                limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
+                    //виведення її в список категорій
+                    limit = uow.LimitRepo.Get().Select(x => x.Value).Last();
 
-                //
-                categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
-                ItemSource();
+                    //
+                    categories.Add(new CategoryView(lastCategory.Name, lastCategory.Summ, (lastCategory.Summ * 100 / limit)));
+                    ItemSource();
 
-                AddDiagram(lastCategory);
+                    AddDiagram(lastCategory);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                uow.Save();
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
 
-            uow.Save();
         }
 
         private void LimitHistory_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
-
         private void Diagram_Loaded(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void SortByName(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Name));
             ItemSource();
         }
-
         private void SortByMoney(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Summ));
             ItemSource();
         }
-
         private void SortByPercents(object sender, RoutedEventArgs e)
         {
             categories = new(categories.OrderBy(x => x.Persent));
             ItemSource();
         }
-
-
         private void DeleteCategory_Click(object sender, RoutedEventArgs e)
         {
             int RemoveIdList = 0;
-            if (CategoriesListBox.SelectedItem != null)
-                RemoveIdList = CategoriesListBox.SelectedIndex;
-            else if (MoneyListBox.SelectedItem != null)
-                RemoveIdList = MoneyListBox.SelectedIndex;
-            else if (PercentsListBox.SelectedItem != null)
-                RemoveIdList = PercentsListBox.SelectedIndex;
+            if (categoriesListBox.SelectedItem != null)
+                RemoveIdList = categoriesListBox.SelectedIndex;
+            else if (moneyListBox.SelectedItem != null)
+                RemoveIdList = moneyListBox.SelectedIndex;
+            else if (percentsListBox.SelectedItem != null)
+                RemoveIdList = percentsListBox.SelectedIndex;
             else
             { MessageBox.Show("Select a category to delete!"); return; }
 
-            CategoryView selectedCategory = (CategoryView)CategoriesListBox.SelectedItem;
+            CategoryView selectedCategory = (CategoryView)categoriesListBox.SelectedItem;
 
             categories.RemoveAt(RemoveIdList);
             ItemSource();
@@ -217,15 +222,14 @@ namespace FinanceManager
             }
             uow.CategoryRepo.Delete(SelectedCategory.Id);
             uow.Save();
-        }
+		}
 
 
 
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+    }
 
 
 
@@ -255,9 +259,92 @@ namespace FinanceManager
             var selectedObject = CategoriesListBox.SelectedItem as CategoryView;
 
             ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name);
+        private void AddCost_Click(object sender, RoutedEventArgs e)
+		{
+            AddCosts addcost = new AddCosts(theme);
+            addcost.ShowDialog();
+	    }
+
+        private void CategoriesListBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+             var selectedObject = categoriesListBox.SelectedItem as CategoryView;
+
+            ShowDetailsOfType showDetails =  new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
+
+        }
+
+        private void DarkThemeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            theme = "Dark";
+            Style darkLabel = (Style)FindResource("LabelStyleDark");
+            Style darkButton = (Style)FindResource("ButtonlStyleDark");
+            Style darkListBox = (Style)FindResource("ListBoxStyleDark");
+            Style darkToolBar = (Style)FindResource("ToolBarStyleDark");
+            Style darkDockPannel = (Style)FindResource("DockPannelStyleDark");
+            moneyLabel.Style = darkLabel;
+            moneySpentLabel.Style = darkLabel;
+            limitDollarLabel.Style = darkLabel;
+            dollarSpentLabel.Style = darkLabel;
+            categoryLabel.Style = darkLabel;
+            percentsLabel.Style = darkLabel;
+            limitLabel.Style = darkLabel;
+            currentLimitLabel.Style = darkLabel;
+            spentLabel.Style = darkLabel;
+            addCategoryBtn.Style = darkButton;
+            changeLimitBtn.Style = darkButton;
+            addCostBtn.Style = darkButton;
+            deleteCategoryBtn.Style = darkButton;
+            exitBtn.Style = darkButton;
+            lightThemeBtn.Style = darkButton;
+            darkThemeBtn.Style = darkButton;
+            limitHistoryBtn.Style = darkButton;
+            sortByNameBtn.Style = darkButton;
+            sortByMoneyBtn.Style = darkButton;
+            sortByPercentsBtn.Style = darkButton;
+            moneyListBox.Style = darkListBox;
+            percentsListBox.Style = darkListBox;
+            categoriesListBox.Style = darkListBox;
+            mainToolBar.Style = darkToolBar;
+            secondToolBar.Style = darkToolBar;
+            dockPannel.Style = darkDockPannel;
+        }
+
+        private void LightThemeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            theme = "Light";
+            Style lightLabel = (Style)FindResource("LabelStyleLight");
+            Style lightButton = (Style)FindResource("ButtonlStyleLight");
+            Style lightListBox = (Style)FindResource("ListBoxStyleLight");
+            Style lightToolBar = (Style)FindResource("ToolBarStyleLight");
+            Style lightDockPannel = (Style)FindResource("DockPannelStyleLight");
+            moneyLabel.Style = lightLabel;
+            moneySpentLabel.Style = lightLabel;
+            limitDollarLabel.Style = lightLabel;
+            dollarSpentLabel.Style = lightLabel;
+            categoryLabel.Style = lightLabel;
+            percentsLabel.Style = lightLabel;
+            limitLabel.Style = lightLabel;
+            currentLimitLabel.Style = lightLabel;
+            spentLabel.Style = lightLabel;
+            addCategoryBtn.Style = lightButton;
+            changeLimitBtn.Style = lightButton;
+            addCostBtn.Style = lightButton;
+            deleteCategoryBtn.Style = lightButton;
+            exitBtn.Style = lightButton;
+            lightThemeBtn.Style = lightButton;
+            darkThemeBtn.Style = lightButton;
+            limitHistoryBtn.Style = lightButton;
+            sortByNameBtn.Style = lightButton;
+            sortByMoneyBtn.Style = lightButton;
+            sortByPercentsBtn.Style = lightButton;
+            moneyListBox.Style = lightListBox;
+            percentsListBox.Style = lightListBox;
+            categoriesListBox.Style = lightListBox;
+            mainToolBar.Style = lightToolBar;
+            secondToolBar.Style = lightToolBar;
+            dockPannel.Style = lightDockPannel;
 
         }
     }
 }
-

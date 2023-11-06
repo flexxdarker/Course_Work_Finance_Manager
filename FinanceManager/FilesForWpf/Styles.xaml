@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:vms="clr-namespace:FinanceManager">
 
-    <Style x:Key="ButtonlStyle" TargetType="{x:Type Button}">
+    <Style x:Key="ButtonlStyleDark" TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="10,0,0,0"/>
         <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -20,7 +20,25 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="LabelStyle" TargetType="{x:Type Label}">
+    <Style x:Key="ButtonlStyleLight" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="120"/>
+        <!--<Setter Property="IsHitTestVisible" Value="False"></Setter>-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="LabelStyleDark" TargetType="{x:Type Label}">
         <Setter Property="Background" Value="Black"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontSize" Value="14"/>
@@ -28,31 +46,101 @@
         <Setter Property="Height" Value="30"/>
     </Style>
 
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="LabelStyleLight" TargetType="{x:Type Label}">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Height" Value="30"/>
+    </Style>
+
+    <Style x:Key="TextBoxStyleDark" TargetType="{x:Type TextBox}">
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Background" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <Style x:Key="TextBoxStyleLight" TargetType="{x:Type TextBox}">
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+    
+    <Style x:Key="PasswordBoxStyleLight" TargetType="{x:Type PasswordBox}">
         <Setter Property="Margin" Value="10"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Padding" Value="5"></Setter>
         <Setter Property="Background" Value="LightGray"></Setter>
         <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <Style x:Key="PasswordBoxStyleDark" TargetType="{x:Type PasswordBox}">
+        <Setter Property="Margin" Value="10"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Padding" Value="5"></Setter>
+        <Setter Property="Background" Value="Black"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="BorderThickness" Value="2"/>
     </Style>
     
-    <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+    <Style x:Key="BorderStyleDark" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="CornerRadius" Value="7"></Setter>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="White"/>
-        
     </Style>
 
-    <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
+    <Style x:Key="BorderStyleLight" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="CornerRadius" Value="7"></Setter>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+    </Style>
+
+    <Style x:Key="ListBoxStyleDark" TargetType="{x:Type ListBox}">
         <Setter Property="Foreground" Value="White"></Setter>
         <Setter Property="Background" Value="Black"/>
         <Setter Property="Margin" Value="5"></Setter>
     </Style>
 
-    <Style x:Key="ToolBarStyle" TargetType="{x:Type ToolBar}">
+    <Style x:Key="ListBoxStyleLight" TargetType="{x:Type ListBox}">
+        <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Margin" Value="5"></Setter>
+    </Style>
+
+    <Style x:Key="ToolBarStyleDark" TargetType="{x:Type ToolBar}">
         <Setter Property="Background" Value="Black"></Setter>
         <Setter Property="ToolBarTray.IsLocked" Value="True"></Setter>
         <Setter Property="Height" Value="35"></Setter>
+    </Style>
+
+    <Style x:Key="ToolBarStyleLight" TargetType="{x:Type ToolBar}">
+        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="ToolBarTray.IsLocked" Value="True"></Setter>
+        <Setter Property="Height" Value="35"></Setter>
+    </Style>
+
+    <Style x:Key="DockPannelStyleDark" TargetType="DockPanel">
+        <Setter Property="Background" Value="Black"/>
+    </Style>
+    
+    <Style x:Key="DockPannelStyleLight" TargetType="DockPanel">
+        <Setter Property="Background" Value="White"/>
     </Style>
 </ResourceDictionary>
