@@ -19,7 +19,7 @@ namespace EntityFramework.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            string conn = "Data Source=(localdb)\\ProjectModels;Initial Catalog=FinanceManagerDB;Integrated Security=True;Connect Timeout=30;";
+            string conn = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FinanceManagerDB;Integrated Security=True;Connect Timeout=30;";
             optionsBuilder.UseSqlServer(conn);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FinancingManager"
         mc:Ignorable="d"
         Title="ShowDetailsOfType" Height="450" Width="800">
-    <DockPanel Background="Black">
+    <DockPanel Name="dockPannel" Style="{StaticResource DockPannelStyleDark}">
         <Grid DockPanel.Dock="Top" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
@@ -19,42 +19,25 @@
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
             <ComboBox Grid.Row="1" Margin="0,10,0,10" Background="Black" BorderBrush="White" BorderThickness="2" >
-                <!--<ComboBoxItem Name="byName" Content="Sort By Name" Selected="byName_Selected"/>
-                <ComboBoxItem Name="byPrice" Content="Sort By Price" Selected="byPrice_Selected"/>-->
-                <Button x:Name="byNameBtn" Content="Sort by Name" Click="byNameBtn_Click" Style="{StaticResource ButtonlStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="byPriceBtn" Content="Sort by Price" Click="byPriceBtn_Click" Style="{StaticResource ButtonlStyle}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <ComboBoxItem Name="SortByName" Selected="SortByName_Selected"/>
+                <ComboBoxItem Name="SortByPrice" Selected="SortByPrice_Selected"/>
             </ComboBox>
-            <ListBox Background="Black" BorderBrush="White" BorderThickness="2" FontSize="20" Foreground="White" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Name="listBox">
+            <ListBox Style="{StaticResource ListBoxStyleDark}" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Name="listBox">
                  <ListBoxItem Background="Black" BorderBrush="White" />
              </ListBox>
-             <Button Margin="2" HorizontalAlignment="Center" Click="deleteBtn_Click" VerticalAlignment="Center" Background="Black" Grid.Column="1" Grid.Row="1"  DockPanel.Dock="Top" BorderThickness="0"  x:Name="deleteBtn">
-                 <Grid>
-                     <Grid.ColumnDefinitions>
-                         <ColumnDefinition Width="2*"/>
-                         <ColumnDefinition Width="*"/>
-                     </Grid.ColumnDefinitions>
-                     <Border Width="30" Height="30" CornerRadius="6" Grid.Column="1">
-                         <Border.Background>
-                             <ImageBrush Stretch="Fill" ImageSource="/FilesForWpf/3687412.png"/>
-                         </Border.Background>
-                     </Border>
-                     <Label Content="Delete" Grid.Column="0" Foreground="White" FontSize="20"/>
-                 </Grid>
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="Black"/>
-                        <Setter Property="BorderBrush" Value="White"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="LightGray"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseDirectlyOver" Value="True">
-                                <Setter Property="Background" Value="LightGray"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+             <Button Margin="2" HorizontalAlignment="Center" Click="deleteBtn_Click" VerticalAlignment="Center" Style="{StaticResource ButtonlStyleDark}" Grid.Column="1" Grid.Row="1"  DockPanel.Dock="Top" BorderThickness="0"  x:Name="deleteBtn">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Width="30" Height="30" CornerRadius="6" Grid.Column="1">
+                        <Border.Background>
+                            <ImageBrush Stretch="Fill" ImageSource="/FilesForWpf/3687412.png"/>
+                        </Border.Background>
+                    </Border>
+                    <Label Name="deleteLabel" Content="Delete" Grid.Column="0" Style="{StaticResource LabelStyleDark}"/>
+                </Grid>
             </Button>
         </Grid>
     </DockPanel>
