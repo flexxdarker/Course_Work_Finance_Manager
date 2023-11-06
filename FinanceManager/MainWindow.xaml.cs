@@ -104,6 +104,18 @@ namespace FinanceManager
             {
                 categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit));
             }
+            //for(int i = 0; i < )
+            //for (int i = 0; i < CategoryNames.Count(); i++)
+            //{
+            //    for (int j = 0; j < categoriesListBox.Items.Count; ++j)
+            //    {
+            //        if (categoriesListBox.Items[j] == CategoryNames[i])
+            //        { 
+            //            categories[j].Summ = Categories[i].Summ;
+            //            categories[j].Persent = (Categories[i].Summ * 100) / limit;
+            //        }
+            //    }
+            //}
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
