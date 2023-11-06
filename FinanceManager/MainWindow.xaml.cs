@@ -70,8 +70,8 @@ namespace FinanceManager
             }
 
             SetLimit();
-            ItemSource();
             FillListBoxes();
+            ItemSource();
             CalculateSpentMoney();
         }
         private void ItemSource()
@@ -100,22 +100,27 @@ namespace FinanceManager
             var Money = uow.CategoryRepo.Get().Select(x => x.Summ).ToList();
 
             var Categories = uow.CategoryRepo.Get().ToList();
+
             for (int i = 0; i < CategoryNames.Count(); i++)
             {
                 categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit));
             }
-            //for(int i = 0; i < )
-            //for (int i = 0; i < CategoryNames.Count(); i++)
-            //{
-            //    for (int j = 0; j < categoriesListBox.Items.Count; ++j)
-            //    {
-            //        if (categoriesListBox.Items[j] == CategoryNames[i])
-            //        { 
-            //            categories[j].Summ = Categories[i].Summ;
-            //            categories[j].Persent = (Categories[i].Summ * 100) / limit;
-            //        }
-            //    }
-            //}
+
+            var costs = uow.CostRepo.Get().ToList();
+            for(int i = 0; i < categories.Count(); ++i)
+            {
+                if (categories[i].Name == Categories[i].Name)
+                {
+                    for (int j = 0; j < costs.Count; j++)
+                    {
+                        if (Categories[i].Id == costs[j].CategoryId)
+                        {
+                            categories[i].Summ += costs[j].Price;
+                            categories[i].Persent = (categories[i].Summ * 100) / limit;
+                        }
+                    }
+                }
+            }
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
@@ -259,6 +264,10 @@ namespace FinanceManager
 
             ShowDetailsOfType showDetails = new ShowDetailsOfType(selectedObject.Name, theme);
             showDetails.ShowDialog();
+
+            ItemSource();
+            FillListBoxes();
+            CalculateSpentMoney();
 
         }
 

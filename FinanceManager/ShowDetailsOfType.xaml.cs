@@ -27,6 +27,7 @@ namespace FinancingManager
         UnitOfWork UoW = new UnitOfWork();
         string category;
 		string theme;
+		Cost RemovedCost = new Cost();
 		private void FillListBox(string category)
 		{
 			foreach (var item in UoW.CostRepo.Get(includeProperties: "Category").Where(x => x.Category.Name == category))
@@ -86,7 +87,11 @@ namespace FinancingManager
 			else
 			{
 				UoW.CostRepo.Delete((listBox.SelectedItem as Cost).Id);
-				listBox.Items.RemoveAt(listBox.SelectedIndex);
+				var category = UoW.CategoryRepo.Get().Where(x => x.Id == (listBox.SelectedItem as Cost).CategoryId).FirstOrDefault();
+				category.Summ -= (listBox.SelectedItem as Cost).Price;
+				UoW.CategoryRepo.Update(category);
+				RemovedCost = (listBox.SelectedItem as Cost);
+                listBox.Items.RemoveAt(listBox.SelectedIndex);
 				UoW.Save();
 			}
 		}
