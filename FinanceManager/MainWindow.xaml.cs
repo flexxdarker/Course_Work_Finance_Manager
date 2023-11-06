@@ -69,10 +69,33 @@ namespace FinanceManager
                 AddDiagram(item);
             }
 
+           
+            SetListBoxesOnStart();
+
             SetLimit();
             FillListBoxes();
             ItemSource();
             CalculateSpentMoney();
+
+        }
+        void SetListBoxesOnStart()
+        {
+            var Categories = uow.CategoryRepo.Get().ToList();
+            var costs = uow.CostRepo.Get().ToList();
+            for (int i = 0; i < categories.Count(); ++i)
+            {
+                if (categories[i].Name == Categories[i].Name)
+                {
+                    for (int j = 0; j < costs.Count; j++)
+                    {
+                        if (Categories[i].Id == costs[j].CategoryId)
+                        {
+                            categories[i].Summ += costs[j].Price;
+                            categories[i].Persent = (categories[i].Summ * 100) / limit;
+                        }
+                    }
+                }
+            }
         }
         private void ItemSource()
         {
@@ -106,21 +129,7 @@ namespace FinanceManager
                 categories.Add(new CategoryView(CategoryNames[i], Money[i], (Categories[i].Summ * 100) / limit));
             }
 
-            var costs = uow.CostRepo.Get().ToList();
-            for(int i = 0; i < categories.Count(); ++i)
-            {
-                if (categories[i].Name == Categories[i].Name)
-                {
-                    for (int j = 0; j < costs.Count; j++)
-                    {
-                        if (Categories[i].Id == costs[j].CategoryId)
-                        {
-                            categories[i].Summ += costs[j].Price;
-                            categories[i].Persent = (categories[i].Summ * 100) / limit;
-                        }
-                    }
-                }
-            }
+            
         }
         private void ChangeLimit_Click(object sender, RoutedEventArgs e)
         {
